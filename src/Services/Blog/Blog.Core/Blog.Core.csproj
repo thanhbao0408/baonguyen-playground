@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BN.CleanArchitecture\BN.CleanArchitecture.Core\BN.CleanArchitecture.Core.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\BN.Common\BN.Common.csproj" />
+  </ItemGroup>
+
+</Project>
