@@ -9,19 +9,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{3848AA01-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BN.CleanArchitecture", "BN.CleanArchitecture", "{9F259412-6A15-4BE1-84A6-545A35D2A3CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BN.CleanArchitecture.Core", "src\BN.CleanArchitecture\BN.CleanArchitecture.Core\BN.CleanArchitecture.Core.csproj", "{A88550C6-BA80-420E-8AF9-62DD6A22C148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.CleanArchitecture.Core", "src\BN.CleanArchitecture\BN.CleanArchitecture.Core\BN.CleanArchitecture.Core.csproj", "{A88550C6-BA80-420E-8AF9-62DD6A22C148}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BN.CleanArchitecture.Infrastructure", "src\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure\BN.CleanArchitecture.Infrastructure.csproj", "{5F1E558A-F4AA-4E0C-8E99-CB919BE379E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.CleanArchitecture.Infrastructure", "src\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure\BN.CleanArchitecture.Infrastructure.csproj", "{5F1E558A-F4AA-4E0C-8E99-CB919BE379E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BN.CleanArchitecture.Infrastructure.EfCore", "src\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure.EfCore\BN.CleanArchitecture.Infrastructure.EfCore.csproj", "{C473CC65-8EC1-46B8-8D6B-9D1C6BCC7273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.CleanArchitecture.Infrastructure.EfCore", "src\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure.EfCore\BN.CleanArchitecture.Infrastructure.EfCore.csproj", "{C473CC65-8EC1-46B8-8D6B-9D1C6BCC7273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.WebApi", "src\Services\Blog\Blog.WebApi\Blog.WebApi.csproj", "{7E34FE34-EF03-446A-BFE5-9B3E33ECDD10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.WebApi", "src\Services\Blog\Blog.WebApi\Blog.WebApi.csproj", "{7E34FE34-EF03-446A-BFE5-9B3E33ECDD10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Core", "src\Services\Blog\Blog.Core\Blog.Core.csproj", "{EC1D5954-05FC-4761-83ED-5F1C9C4BB1D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Core", "src\Services\Blog\Blog.Core\Blog.Core.csproj", "{EC1D5954-05FC-4761-83ED-5F1C9C4BB1D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Infrastructure", "src\Services\Blog\Blog.Infrastructure\Blog.Infrastructure.csproj", "{7E75BFA5-E5B2-4921-90BC-1ECE72E80BD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Infrastructure", "src\Services\Blog\Blog.Infrastructure\Blog.Infrastructure.csproj", "{7E75BFA5-E5B2-4921-90BC-1ECE72E80BD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Infrastructure.EfCore", "src\Services\Blog\Blog.Infrastructure.EfCore\Blog.Infrastructure.EfCore.csproj", "{576B71C9-419F-4394-8AEB-453918E7231E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Infrastructure.EfCore", "src\Services\Blog\Blog.Infrastructure.EfCore\Blog.Infrastructure.EfCore.csproj", "{576B71C9-419F-4394-8AEB-453918E7231E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{F31D090D-ED89-447E-B971-46F4088F1889}"
 EndProject
@@ -29,11 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{0841
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{C6AF22CA-272F-4085-A5BE-4B99AF6F70D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdmin", "src\WebApps\WebAdmin\WebAdmin.csproj", "{4DF7A119-CD1B-4EF4-AA77-E8A18329C72A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAdmin", "src\WebApps\WebAdmin\WebAdmin.csproj", "{4DF7A119-CD1B-4EF4-AA77-E8A18329C72A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{19DEA349-ACB6-4C55-8A9C-6D3C53A3DE5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BN.Common", "src\BuildingBlocks\BN.Common\BN.Common.csproj", "{AD50F9FD-A83B-4ED9-9679-4B5BEAFB37E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.Common", "src\BuildingBlocks\BN.Common\BN.Common.csproj", "{AD50F9FD-A83B-4ED9-9679-4B5BEAFB37E4}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2F0B276C-9DF9-4242-A77F-E56935EAF88E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{AD50F9FD-A83B-4ED9-9679-4B5BEAFB37E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD50F9FD-A83B-4ED9-9679-4B5BEAFB37E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD50F9FD-A83B-4ED9-9679-4B5BEAFB37E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F0B276C-9DF9-4242-A77F-E56935EAF88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F0B276C-9DF9-4242-A77F-E56935EAF88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F0B276C-9DF9-4242-A77F-E56935EAF88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F0B276C-9DF9-4242-A77F-E56935EAF88E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+    blogdb:
+        container_name: blogdb
+        restart: always
+        environment:
+            - POSTGRES_USER=baonguyen
+            - POSTGRES_PASSWORD=P@ss123
+            - POSTGRES_DB=BlogDb
+        ports:
+            - "5432:5432"
+
+    blog.webapi:
+        container_name: blog.webapi
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - "ConnectionStrings:postgres=Host=blogdb;Port=5432;Username=baonguyen;Password=P@ss123;Database=BlogPostgres"
+        depends_on:
+            - blogdb
+        ports:
+            - "8000:80"
