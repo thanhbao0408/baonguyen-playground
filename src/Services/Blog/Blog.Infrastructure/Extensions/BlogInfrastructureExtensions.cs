@@ -14,7 +14,7 @@ namespace Blog.Infrastructure.Extensions
     public static class BlogInfrastructureExtensions
     {
         private const string CorsName = "api";
-        private const string DbName = "blog-postgres";
+        private const string DbName = "postgres";
 
         public static IServiceCollection AddCoreServices(this IServiceCollection services,
             IConfiguration config, IWebHostEnvironment env, Type apiType)

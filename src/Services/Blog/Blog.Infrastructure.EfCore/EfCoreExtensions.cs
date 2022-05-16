@@ -13,7 +13,7 @@ namespace Blog.Infrastructure.EfCore;
 
 public static class EfCoreExtensions
 {
-    private const string DbName = "blog-postgres";
+    private const string DbName = "postgres";
     public static IServiceCollection AddEfCoreServices(this IServiceCollection services,
       IConfiguration config)
     {

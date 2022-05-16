@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\..\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure.EfCore\BN.CleanArchitecture.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\..\..\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure\BN.CleanArchitecture.Infrastructure.csproj" />
     <ProjectReference Include="..\Blog.Core\Blog.Core.csproj" />
+    <ProjectReference Include="..\Blog.Infrastructure.EfCore\Blog.Infrastructure.EfCore.csproj" />
   </ItemGroup>
 
 </Project>

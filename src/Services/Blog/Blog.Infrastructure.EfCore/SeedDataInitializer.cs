@@ -1,3 +1,5 @@
+using Blog.Infrastructure.EfCore.DbContext;
+
 namespace Blog.Infrastructure.EfCore;
 
 public static class SeedDataInitializer
