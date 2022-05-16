@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CoreAnchor = Blog.Core.Anchor;
+using BN.CleanArchitecture.Infrastructure.AutoMapper;
 
 namespace Blog.Infrastructure.Extensions
 {
@@ -30,6 +31,7 @@ namespace Blog.Infrastructure.Extensions
             services.AddHttpContextAccessor();
             services.AddCustomMediatR(new[] { typeof(CoreAnchor) });
             services.AddCustomValidators(new[] { typeof(CoreAnchor) });
+            services.AddAutoMapperConfig(typeof(CoreAnchor));
 
             services.AddControllers();
 

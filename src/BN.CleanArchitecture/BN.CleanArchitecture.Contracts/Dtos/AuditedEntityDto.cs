@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BN.CleanArchitecture.Core.Domain.Entities
+namespace BN.CleanArchitecture.Contracts.Dtos
 {
-    public class AuditedEntity : Entity, IHasAuditableFields
+    public class AuditedEntityDto : EntityDto, IHasAuditableFields
     {
         public DateTime Created { get; set; }
 
@@ -17,10 +17,10 @@ namespace BN.CleanArchitecture.Core.Domain.Entities
         public string? LastModifiedBy { get; set; }
     }
 
-    public class AuditedEntity<TKey> : Entity<TKey>, IHasAuditableFields
+    public class AuditedEntityDto<TKey> : EntityDto<TKey>, IHasAuditableFields
     {
-        protected AuditedEntity() { }
-        protected AuditedEntity(TKey id) : base(id)
+        protected AuditedEntityDto() { }
+        protected AuditedEntityDto(TKey id) : base(id)
         {
         }
 

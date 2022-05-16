@@ -9,6 +9,16 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\BN.CleanArchitecture\BN.CleanArchitecture.Core\BN.CleanArchitecture.Core.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\BN.Common\BN.Common.csproj" />
+    <ProjectReference Include="..\Blog.Contracts\Blog.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Methods\Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,7 @@
-﻿using Blog.Core.Entities.Taggings;
-using BN.CleanArchitecture.Core.Domain.Entities;
+﻿using BN.CleanArchitecture.Core.Domain.Entities;
 using BN.Common;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace Blog.Core.Entities.Articles
 {
@@ -25,6 +23,7 @@ namespace Blog.Core.Entities.Articles
 
         public string CoverImage { get; set; }
 
+        [StringLength(50)]
         [Required]
         public string Slug
         {
