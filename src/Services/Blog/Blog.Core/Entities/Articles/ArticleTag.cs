@@ -18,10 +18,8 @@ namespace Blog.Core.Entities.Articles
             TagId = tagId;
         }
 
-        [Key]
         public Guid ArticleId { get; set; }
 
-        [Key]
         public Guid TagId { get; set; }
 
         public Tag Tag { get; set; }

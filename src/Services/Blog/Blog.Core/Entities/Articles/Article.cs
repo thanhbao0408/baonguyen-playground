@@ -25,20 +25,7 @@ namespace Blog.Core.Entities.Articles
 
         [StringLength(50)]
         [Required]
-        public string Slug
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Title))
-                {
-                    throw new ArgumentNullException("Title must not be null");
-                }
-
-                var slugMaxLength = 50;
-
-                return this.Title.GenerateSlug(slugMaxLength);
-            }
-        }
+        public string Slug { get; set; }
 
         public Collection<ArticleTag> ArticleTags { get; set; } = new Collection<ArticleTag>();
 

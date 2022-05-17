@@ -1,6 +1,7 @@
 ﻿using Blog.Core.Entities.Articles;
 using BN.CleanArchitecture.Infrastructure.EfCore;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Data.Entity.Infrastructure.Annotations;
 
 namespace Blog.Infrastructure.EfCore.DbContext
@@ -30,7 +31,17 @@ namespace Blog.Infrastructure.EfCore.DbContext
             builder.Entity<Article>(option =>
             {
                 option.Property(p => p.Slug)
-                .HasAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_FirstNameLastName")));
-            };
+                .HasAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new System.ComponentModel.DataAnnotations.Schema.IndexAttribute("IX_FirstNameLastName")));
+            });
+
+            builder.Entity<ArticleTag>(options =>
+            {
+                options.HasKey(table => new
+                {
+                    table.ArticleId,
+                    table.TagId
+                });
+            });
         }
     }
+}
