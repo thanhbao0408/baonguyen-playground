@@ -2,11 +2,11 @@ using System.Linq.Expressions;
 
 namespace BN.CleanArchitecture.Core.Specification;
 
-public class Negated<T> : SpecificationBase<T>
+public class NegatedOperation<T> : SpecificationBase<T>
 {
     private readonly ISpecification<T> _inner;
 
-    public Negated(ISpecification<T> inner)
+    public NegatedOperation(ISpecification<T> inner)
     {
         _inner = inner;
     }

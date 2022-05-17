@@ -1,16 +1,13 @@
-﻿using BN.CleanArchitecture.Infrastructure.EfCore;
+﻿using Blog.Core.Entities.Articles;
+using BN.CleanArchitecture.Infrastructure.EfCore;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure.Annotations;
 
 namespace Blog.Infrastructure.EfCore.DbContext
 {
-    public class BlogDbContext: DbContextBase
+    public class BlogDbContext : DbContextBase
     {
+        public DbSet<Article> Articles { get; set; } = default!;
         public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
         {
         }
@@ -29,6 +26,11 @@ namespace Blog.Infrastructure.EfCore.DbContext
             //builder.Entity<ApplicationUser>(option => { 
             //    option.ToTable("")
             //});
+
+            builder.Entity<Article>(option =>
+            {
+                option.Property(p => p.Slug)
+                .HasAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_FirstNameLastName")));
+            };
         }
     }
-}

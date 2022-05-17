@@ -59,11 +59,11 @@ public abstract class GridSpecificationBase<T> : IGridSpecification<T>
         return this;
     }
 
-    protected void ApplyPaging(int skip, int take)
+    protected void ApplyPaging(int skip, int take, bool isPagingEnabled)
     {
         Skip = skip;
         Take = take;
-        IsPagingEnabled = true;
+        IsPagingEnabled = isPagingEnabled;
     }
 
     protected void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)

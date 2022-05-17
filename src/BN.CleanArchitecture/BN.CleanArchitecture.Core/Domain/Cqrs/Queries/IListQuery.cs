@@ -8,4 +8,5 @@ public interface IListQuery<TResponse> : IQuery<TResponse>
     public List<string> Sorts { get; init; }
     public int Page { get; init; }
     public int PageSize { get; init; }
+    public bool IsPagingEnabled { get; init; }
 }

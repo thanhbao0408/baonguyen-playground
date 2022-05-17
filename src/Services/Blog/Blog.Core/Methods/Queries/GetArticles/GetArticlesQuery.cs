@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Core.Methods.Queries
+namespace Blog.Core.Queries
 {
     public class GetArticlesQuery : IListQuery<ListResultModel<ArticleDto>>
     {
@@ -18,6 +18,7 @@ namespace Blog.Core.Methods.Queries
         public List<string> Sorts { get; init; } = new();
         public int Page { get; init; } = 1;
         public int PageSize { get; init; } = 20;
+        public bool IsPagingEnabled { get; init; } = true;
 
         internal class Validator : AbstractValidator<GetArticlesQuery>
         {

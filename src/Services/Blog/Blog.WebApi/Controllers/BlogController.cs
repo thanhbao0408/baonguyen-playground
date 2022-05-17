@@ -1,12 +1,18 @@
 ﻿
+using Blog.Contracts.Dtos.Articles;
+using Blog.Core.Queries;
+using BN.CleanArchitecture.Core.Domain.Cqrs;
+using BN.CleanArchitecture.Infrastructure;
+using BN.CleanArchitecture.Infrastructure.Controller;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
-    public class BlogController : Controller
+    public class BlogController : BaseController
     {
         #region Articles
         /*
@@ -17,7 +23,14 @@ namespace Blog.WebApi.Controllers
          * DELETE Article
          */
 
-        //public async Task<ActionResult> 
+        [HttpGet("/api/v{version:apiVersion}/articles")]
+        public async Task<ActionResult> HandleGetArticlesAsync([FromQuery] GetArticlesQuery query,
+            CancellationToken cancellationToken = new())
+        {
+            //var queryModel = HttpContext.SafeGetListQuery<GetArticlesQuery, ListResultModel<ArticleDto>>(query);
+
+            return Ok(await Mediator.Send(query,cancellationToken));
+        }
         #endregion
 
         #region Tags

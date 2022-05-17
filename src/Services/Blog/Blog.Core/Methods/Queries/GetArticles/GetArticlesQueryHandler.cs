@@ -6,7 +6,7 @@ using BN.CleanArchitecture.Core.Domain.Cqrs;
 using BN.CleanArchitecture.Core.Repository;
 using MediatR;
 
-namespace Blog.Core.Methods.Queries
+namespace Blog.Core.Queries
 {
     public class GetArticlesQueryHandler : IRequestHandler<GetArticlesQuery, ResultModel<ListResultModel<ArticleDto>>>
     {

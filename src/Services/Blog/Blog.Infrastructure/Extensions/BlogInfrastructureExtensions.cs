@@ -52,8 +52,8 @@ namespace Blog.Infrastructure.Extensions
             //        };
             //    });
 
-            services.AddAuthorization(options =>
-            {
+            //services.AddAuthorization(options =>
+            //{
                 //options.AddPolicy("ApiCaller", policy =>
                 //{
                 //    policy.RequireAuthenticatedUser();
@@ -64,7 +64,7 @@ namespace Blog.Infrastructure.Extensions
                 //{
                 //    policy.RequireClaim("sub");
                 //});
-            });
+            //});
 
             //var builder = services.AddIdentityCore<ApplicationUser>(options => { });
             //builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
@@ -82,16 +82,19 @@ namespace Blog.Infrastructure.Extensions
 
             app.UseCors(CorsName);
             app.UseRouting();
-            app.UseAuthentication();
+
+            //app.UseAuthentication();
+            
             app.UseAuthorization();
             // app.UseCloudEvents();
 
-            app.UseEndpoints(endpoints =>
-            {
-                // endpoints.MapSubscribeHandler();
-                endpoints.MapControllers()
-                    .RequireAuthorization("ApiCaller");
-            });
+            app.MapControllers();
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    // endpoints.MapSubscribeHandler();
+            //    endpoints.MapControllers();
+            //        //.RequireAuthorization("ApiCaller");
+            //});
 
             IApiVersionDescriptionProvider? provider = app.Services.GetService<IApiVersionDescriptionProvider>();
             return app.UseSwagger(provider);

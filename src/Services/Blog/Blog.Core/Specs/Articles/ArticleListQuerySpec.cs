@@ -15,7 +15,7 @@ namespace Blog.Core.Specs.Articles
 
             ApplySortingList(gridQueryInput.Sorts);
 
-            ApplyPaging(gridQueryInput.Page, gridQueryInput.PageSize);
+            ApplyPaging(gridQueryInput.Page, gridQueryInput.PageSize, gridQueryInput.IsPagingEnabled);
         }
     }
 }
