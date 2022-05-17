@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Contract.Dtos.Tags
+namespace Blog.Contracts.Dtos.Tags
 {
     public class TagDto
     {

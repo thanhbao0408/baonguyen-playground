@@ -1,15 +1,8 @@
 ﻿using Blog.Contracts.Dtos.Articles;
-using Blog.Core.Entities.Articles;
 using BN.CleanArchitecture.Core.Domain.Cqrs;
-using BN.CleanArchitecture.Core.Repository;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Blog.Core.Queries
+namespace Blog.Core.Methods.Queries
 {
     public class GetArticlesQuery : IListQuery<ListResultModel<ArticleDto>>
     {

@@ -1,11 +1,7 @@
 ﻿
 using Blog.Contracts.Dtos.Articles;
-using Blog.Core.Queries;
-using BN.CleanArchitecture.Core.Domain.Cqrs;
-using BN.CleanArchitecture.Infrastructure;
+using Blog.Core.Methods.Queries;
 using BN.CleanArchitecture.Infrastructure.Controller;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.WebApi.Controllers
@@ -16,11 +12,12 @@ namespace Blog.WebApi.Controllers
     {
         #region Articles
         /*
+         * Only expose the GET methods to the external APIs
          * GET Articles brief information 
          * GET Article
-         * POST Article
-         * PUT Article
-         * DELETE Article
+         * // POST Article
+         * // PUT Article
+         * // DELETE Article
          */
 
         [HttpGet("/api/v{version:apiVersion}/articles")]
@@ -29,7 +26,13 @@ namespace Blog.WebApi.Controllers
         {
             //var queryModel = HttpContext.SafeGetListQuery<GetArticlesQuery, ListResultModel<ArticleDto>>(query);
 
-            return Ok(await Mediator.Send(query,cancellationToken));
+            return Ok(await Mediator.Send(query, cancellationToken));
+        }
+
+        [HttpGet("/api/v{version:apiVersion}/articles/{slug}")]
+        public async Task<ActionResult<ArticleDetailDto>> HandleGetArticleBySlug([FromRoute] string slug, CancellationToken cancellation = new())
+        {
+            return Ok(await Mediator.Send(new GetArticleDetailBySlugQuery(slug), cancellation));
         }
         #endregion
 

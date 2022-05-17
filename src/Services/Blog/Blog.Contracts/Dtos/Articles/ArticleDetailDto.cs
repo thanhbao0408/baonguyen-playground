@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BN.CleanArchitecture.Contracts.Dtos;
 
-namespace Blog.Contract.Dtos.Articles
+namespace Blog.Contracts.Dtos.Articles
 {
-    internal class ArticleDetailDto
+    public class ArticleDetailDto: EntityDto<Guid>
     {
     }
 }
