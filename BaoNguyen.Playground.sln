@@ -43,7 +43,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Contracts", "src\Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.CleanArchitecture.Contracts", "src\BN.CleanArchitecture\BN.CleanArchitecture.Contracts\BN.CleanArchitecture.Contracts.csproj", "{3875F7BA-96D2-4C80-8902-75249684E465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "..\src\WebApps\IdentityServer\IdentityServer.csproj", "{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "src\WebApps\IdentityServer\IdentityServer.csproj", "{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
