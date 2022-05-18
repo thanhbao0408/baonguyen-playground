@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Infrastructure", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Infrastructure.EfCore", "src\Services\Blog\Blog.Infrastructure.EfCore\Blog.Infrastructure.EfCore.csproj", "{576B71C9-419F-4394-8AEB-453918E7231E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{F31D090D-ED89-447E-B971-46F4088F1889}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{08412BE6-F041-483D-B8D2-50841BEF2FBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{C6AF22CA-272F-4085-A5BE-4B99AF6F70D9}"
@@ -39,11 +37,13 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{3475EC3D-B0CD-4CA2-A8DF-D7567F2D397A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground.AppContracts", "src\BuildingBlocks\Contracts\Playground.AppContracts\Playground.AppContracts.csproj", "{ADDF913A-4734-407E-ADC2-B6FE70AB9EBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground.AppContracts", "src\BuildingBlocks\Contracts\Playground.AppContracts\Playground.AppContracts.csproj", "{ADDF913A-4734-407E-ADC2-B6FE70AB9EBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Contracts", "src\Services\Blog\Blog.Contracts\Blog.Contracts.csproj", "{D7CAED8B-30D1-4B7A-BEA1-D72308B3483A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Contracts", "src\Services\Blog\Blog.Contracts\Blog.Contracts.csproj", "{D7CAED8B-30D1-4B7A-BEA1-D72308B3483A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BN.CleanArchitecture.Contracts", "src\BN.CleanArchitecture\BN.CleanArchitecture.Contracts\BN.CleanArchitecture.Contracts.csproj", "{3875F7BA-96D2-4C80-8902-75249684E465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.CleanArchitecture.Contracts", "src\BN.CleanArchitecture\BN.CleanArchitecture.Contracts\BN.CleanArchitecture.Contracts.csproj", "{3875F7BA-96D2-4C80-8902-75249684E465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "..\src\WebApps\IdentityServer\IdentityServer.csproj", "{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +103,10 @@ Global
 		{3875F7BA-96D2-4C80-8902-75249684E465}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3875F7BA-96D2-4C80-8902-75249684E465}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3875F7BA-96D2-4C80-8902-75249684E465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,13 +120,13 @@ Global
 		{EC1D5954-05FC-4761-83ED-5F1C9C4BB1D2} = {3848AA01-38A3-4D7A-8402-456EE0C2AD17}
 		{7E75BFA5-E5B2-4921-90BC-1ECE72E80BD0} = {3848AA01-38A3-4D7A-8402-456EE0C2AD17}
 		{576B71C9-419F-4394-8AEB-453918E7231E} = {3848AA01-38A3-4D7A-8402-456EE0C2AD17}
-		{F31D090D-ED89-447E-B971-46F4088F1889} = {A2119566-67DD-44EC-B17B-25420F585F44}
 		{4DF7A119-CD1B-4EF4-AA77-E8A18329C72A} = {08412BE6-F041-483D-B8D2-50841BEF2FBF}
 		{AD50F9FD-A83B-4ED9-9679-4B5BEAFB37E4} = {19DEA349-ACB6-4C55-8A9C-6D3C53A3DE5E}
 		{3475EC3D-B0CD-4CA2-A8DF-D7567F2D397A} = {19DEA349-ACB6-4C55-8A9C-6D3C53A3DE5E}
 		{ADDF913A-4734-407E-ADC2-B6FE70AB9EBA} = {3475EC3D-B0CD-4CA2-A8DF-D7567F2D397A}
 		{D7CAED8B-30D1-4B7A-BEA1-D72308B3483A} = {3848AA01-38A3-4D7A-8402-456EE0C2AD17}
 		{3875F7BA-96D2-4C80-8902-75249684E465} = {9F259412-6A15-4BE1-84A6-545A35D2A3CE}
+		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88} = {08412BE6-F041-483D-B8D2-50841BEF2FBF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D946A9F-091A-4D5E-B527-048A921BC582}

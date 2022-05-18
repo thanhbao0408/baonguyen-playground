@@ -1,12 +1,12 @@
-﻿
-using Blog.Contracts.Dtos.Articles;
+﻿using Blog.Contracts.Dtos.Articles;
 using Blog.Core.Methods.Queries;
 using BN.CleanArchitecture.Infrastructure.Controller;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.WebApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiVersion("1.0")]
     public class BlogController : BaseController
     {
