@@ -12,9 +12,12 @@ COPY ["src/Services/Blog/Blog.Infrastructure/Blog.Infrastructure.csproj", "src/S
 COPY ["src/Services/Blog/Blog.Infrastructure.EfCore/Blog.Infrastructure.EfCore.csproj", "src/Services/Blog/Blog.Infrastructure.EfCore/"]
 COPY ["src/Services/Blog/Blog.Core/Blog.Core.csproj", "src/Services/Blog/Blog.Core/"]
 COPY ["src/BN.CleanArchitecture/BN.CleanArchitecture.Core/BN.CleanArchitecture.Core.csproj", "src/BN.CleanArchitecture/BN.CleanArchitecture.Core/"]
+COPY ["src/Services/Blog/Blog.Contracts/Blog.Contracts.csproj", "src/Services/Blog/Blog.Contracts/"]
+COPY ["src/BN.CleanArchitecture/BN.CleanArchitecture.Contracts/BN.CleanArchitecture.Contracts.csproj", "src/BN.CleanArchitecture/BN.CleanArchitecture.Contracts/"]
 COPY ["src/BuildingBlocks/BN.Common/BN.Common.csproj", "src/BuildingBlocks/BN.Common/"]
 COPY ["src/BN.CleanArchitecture/BN.CleanArchitecture.Infrastructure.EfCore/BN.CleanArchitecture.Infrastructure.EfCore.csproj", "src/BN.CleanArchitecture/BN.CleanArchitecture.Infrastructure.EfCore/"]
 COPY ["src/BN.CleanArchitecture/BN.CleanArchitecture.Infrastructure/BN.CleanArchitecture.Infrastructure.csproj", "src/BN.CleanArchitecture/BN.CleanArchitecture.Infrastructure/"]
+COPY ["src/BuildingBlocks/Contracts/Playground.AppContracts/Playground.AppContracts.csproj", "src/BuildingBlocks/Contracts/Playground.AppContracts/"]
 RUN dotnet restore "src/Services/Blog/Blog.WebApi/Blog.WebApi.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Blog/Blog.WebApi"

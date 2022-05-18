@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiVersion("1.0")]
     public class BlogController : BaseController
     {
