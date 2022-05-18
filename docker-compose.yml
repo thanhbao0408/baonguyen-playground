@@ -12,5 +12,12 @@ services:
       context: .
       dockerfile: src/Services/Blog/Blog.WebApi/Dockerfile
 
+      
+  playground.apiocelotgw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: src/ApiGateways/Playground.OcelotApiGw/Dockerfile
+
 volumes:
   postgres_data:
