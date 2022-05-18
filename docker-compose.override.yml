@@ -20,3 +20,13 @@ services:
             - blogdb
         ports:
             - "8000:80"
+            
+    playground.apiocelotgw:
+        container_name: ocelotapigw
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            #- "ElasticConfiguration:Uri=http://es01:9200"
+        depends_on:
+            - blog.webapi
+        ports:
+            - "8048:80"
