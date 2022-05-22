@@ -22,20 +22,26 @@ namespace IdentityServer
                 // ...
             };
 
-        public static IEnumerable<Client> Clients =>
+        public static IEnumerable<Client> Clients(IConfiguration configuration) =>
             new Client[]
             {
                  // Swagger client
                 new Client
                 {
                     ClientId = "api_swagger",
-                    ClientName = "Swagger UI for Blog API",
-                    ClientSecrets = {new Secret("secret".Sha256())}, // change me!
+                    ClientName = "Swagger UI for APIs",
+                    //ClientSecrets = {new Secret("secret".Sha256())}, // change me!
 
                     AllowedGrantTypes = GrantTypes.Code,
+                    RequireClientSecret = false,
+                    RequirePkce = true,
 
-                    RedirectUris = {"https://localhost:7239/swagger/oauth2-redirect.html"},
-                    AllowedCorsOrigins = {"https://localhost:7239"},
+                    RedirectUris = { 
+                        configuration.GetValue<string>("SwaggerUrls:BlogApiIdentityRedirectUris"),
+                    },
+                    AllowedCorsOrigins = {
+                        configuration.GetValue<string>("SwaggerUrls:BlogApiAllowedCorsOrigin"),
+                    },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

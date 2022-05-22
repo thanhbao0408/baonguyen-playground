@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -61,7 +62,9 @@ public static class Extensions
         }
     }
 
-    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
+    public static IApplicationBuilder UseSwagger(this IApplicationBuilder app,
+        IApiVersionDescriptionProvider provider,
+        IConfiguration configuration)
     {
         app.UseSwagger();
         app.UseSwaggerUI(
@@ -75,8 +78,8 @@ public static class Extensions
 
                 options.EnablePersistAuthorization();
 
-                options.OAuthClientId("api_swagger");
-                options.OAuthAppName("The Vow API- Swagger");
+                options.OAuthClientId(configuration.GetValue<string>("SwaggerConfig:OAuthClientId"));
+                options.OAuthAppName(configuration.GetValue<string>("SwaggerConfig:OAuthClientName"));
                 options.OAuthUsePkce();
             });
 

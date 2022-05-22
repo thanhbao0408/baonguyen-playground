@@ -65,7 +65,7 @@ public static class InfrastructureExtensions
         });
 
         IApiVersionDescriptionProvider? provider = app.Services.GetService<IApiVersionDescriptionProvider>();
-        return app.UseSwagger(provider);
+        return app.UseSwagger(provider, app.Configuration);
     }
 
     [DebuggerStepThrough]

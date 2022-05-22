@@ -41,55 +41,55 @@ namespace Blog.Infrastructure.Extensions
             services.AddSwagger(apiType,
             options =>
             {
-                //// https://www.scottbrady91.com/identity-server/aspnet-core-swagger-ui-authorization-using-identityserver4
-                //// Swagger authentication
-                //options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                //{
-                //    Type = SecuritySchemeType.OAuth2,
-                //    Flows = new OpenApiOAuthFlows
-                //    {
-                //        AuthorizationCode = new OpenApiOAuthFlow
-                //        {
-                //            AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
-                //            TokenUrl = new Uri("https://localhost:5001/connect/token"),
-                //            Scopes = new Dictionary<string, string>
-                //            {
-                //                {PlaygroundAppConstants.BlogAPIScopeName, PlaygroundAppConstants.BlogAPIScopeDisplayName}
-                //            }
-                //        },
-                //    }
-                //});
-                //options.OperationFilter<BlogAuthorizeCheckOperationFilter>();
+                // https://www.scottbrady91.com/identity-server/aspnet-core-swagger-ui-authorization-using-identityserver4
+                // Swagger authentication
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
+                            TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {PlaygroundAppConstants.BlogAPIScopeName, PlaygroundAppConstants.BlogAPIScopeDisplayName}
+                            }
+                        },
+                    }
+                });
+                options.OperationFilter<BlogAuthorizeCheckOperationFilter>();
             });
 
-            //services.AddAuthentication("Bearer")
-            //    .AddJwtBearer("Bearer", options =>
-            //    {
-            //        options.Authority = "https://localhost:5001";
-            //        options.MapInboundClaims = false;
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    // options.MapInboundClaims = false;
 
-            //        options.TokenValidationParameters = new TokenValidationParameters()
-            //        {
-            //            ValidateAudience = false,
-            //            ValidTypes = new[] { "at+jwt" },
-            //            NameClaimType = "name",
-            //            RoleClaimType = "role"
-            //        };
-            //    });
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience = false,
+                        ValidTypes = new[] { "at+jwt" },
+                        //NameClaimType = "name",
+                        //RoleClaimType = "role"
+                    };
+                });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("ApiCaller", policy =>
-            //    {
-            //        policy.RequireAuthenticatedUser();
-            //        policy.RequireClaim("scope", PlaygroundAppConstants.BlogAPIScopeName);
-            //    });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiCaller", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", PlaygroundAppConstants.BlogAPIScopeName);
+                });
 
-            //    options.AddPolicy("RequireInteractiveUser", policy =>
-            //    {
-            //        policy.RequireClaim("sub");
-            //    });
-            //});
+                //options.AddPolicy("RequireInteractiveUser", policy =>
+                //{
+                //    policy.RequireClaim("sub");
+                //});
+            });
 
             return services;
         }
@@ -111,12 +111,12 @@ namespace Blog.Infrastructure.Extensions
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapSubscribeHandler();
-                endpoints.MapControllers();
-                //.RequireAuthorization("ApiCaller");
+                endpoints.MapControllers()
+                .RequireAuthorization("ApiCaller");
             });
 
             IApiVersionDescriptionProvider? provider = app.Services.GetService<IApiVersionDescriptionProvider>();
-            return app.UseSwagger(provider);
+            return app.UseSwagger(provider, app.Configuration);
         }
     }
 }

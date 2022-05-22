@@ -22,7 +22,7 @@ namespace Blog.Core.Entities.Articles
 
         public Guid TagId { get; set; }
 
-        public Tag Tag { get; set; }
+        public BlogTag Tag { get; set; }
 
     }
 }
