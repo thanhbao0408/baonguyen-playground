@@ -6,6 +6,7 @@ using Serilog;
 using Microsoft.Extensions.DependencyInjection;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace IdentityServer
 {
@@ -31,7 +32,11 @@ namespace IdentityServer
 
 
             builder.Services
-                .AddIdentityServer(options => options.KeyManagement.Enabled = true)
+                .AddIdentityServer(options =>
+                {
+                    options.KeyManagement.Enabled = true;
+                    options.IssuerUri = builder.Configuration.GetValue<string>("IssuerUri");
+                })
                 .AddOperationalStore(options =>
                 {
                     options.ConfigureDbContext = optionsBuilder =>
@@ -58,6 +63,19 @@ namespace IdentityServer
 
             builder.Services.AddScoped<ApplicationUserManager>();
             builder.Services.AddScoped<ApplicationSignInManager>();
+
+            // Adjust to this (or similar)
+            builder.Services
+               .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   // add an instance of the patched manager to the options:
+                   options.CookieManager = new ChunkingCookieManager();
+
+                   options.Cookie.HttpOnly = true;
+                   options.Cookie.SameSite = SameSiteMode.None;
+                   options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+               });
 
             return builder.Build();
         }

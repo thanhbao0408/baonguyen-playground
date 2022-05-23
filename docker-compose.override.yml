@@ -21,13 +21,27 @@ services:
         ports:
             - "5433:5432"
 
+    identityserver:
+        container_name: identityserver
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Development
+            - "ConnectionStrings:postgres=Host=identity_server_db;Port=5432;Username=baonguyen;Password=P@ss123;Database=IdentityServerDb"
+            - "IssuerUri=http://host.docker.internal:5000"
+        depends_on:
+            - identity_server_db
+        ports:
+            - "5000:80"
+
     blog.webapi:
         container_name: blog.webapi
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
             - "ConnectionStrings:postgres=Host=blogdb;Port=5432;Username=baonguyen;Password=P@ss123;Database=BlogPostgres"
+            - "SwaggerConfig:AuthorizationBaseUrl=http://host.docker.internal:5000"
+            - "IdentityServer:AuthorityUrl=http://identityserver:5000"
         depends_on:
             - blogdb
+            - identityserver
         ports:
             - "8000:80"
             
@@ -37,6 +51,8 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
             #- "ElasticConfiguration:Uri=http://es01:9200"
         depends_on:
+            - identityserver
             - blog.webapi
         ports:
             - "8048:80"
+

@@ -11,19 +11,26 @@ services:
     volumes:
          - identity_server_postgres_data:/var/lib/postgresql/data/
 
+  identityserver:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: src/WebApps/IdentityServer/Dockerfile
+
   blog.webapi:
     image: ${DOCKER_REGISTRY-}blogwebapi
     build:
       context: .
       dockerfile: src/Services/Blog/Blog.WebApi/Dockerfile
 
-      
   playground.apiocelotgw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
     build:
       context: .
       dockerfile: src/ApiGateways/Playground.OcelotApiGw/Dockerfile
 
+
 volumes:
   postgres_data:
   identity_server_postgres_data:
+

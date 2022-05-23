@@ -50,8 +50,8 @@ namespace Blog.Infrastructure.Extensions
                     {
                         AuthorizationCode = new OpenApiOAuthFlow
                         {
-                            AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
-                            TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                            AuthorizationUrl = new Uri(config.GetValue<string>("SwaggerConfig:AuthorizationBaseUrl") + "/connect/authorize"),
+                            TokenUrl = new Uri(config.GetValue<string>("SwaggerConfig:AuthorizationBaseUrl") + "/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
                                 { PlaygroundAppConstants.BlogApiScopeReadName, PlaygroundAppConstants.BlogApiScopeReadDisplayName },
@@ -66,16 +66,17 @@ namespace Blog.Infrastructure.Extensions
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:5001";
+                    options.Authority = config.GetValue<string>("IdentityServer:AuthorityUrl");
                     // options.MapInboundClaims = false;
 
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateAudience = false,
                         ValidTypes = new[] { "at+jwt" },
-                        //NameClaimType = "name",
-                        //RoleClaimType = "role"
+                        NameClaimType = "name",
+                        RoleClaimType = "role"
                     };
+                    options.RequireHttpsMetadata = false;
                 });
 
             services.AddAuthorization(options =>
