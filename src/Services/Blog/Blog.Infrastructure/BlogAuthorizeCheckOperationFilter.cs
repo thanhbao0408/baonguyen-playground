@@ -32,7 +32,7 @@ internal class BlogAuthorizeCheckOperationFilter : AuthorizeCheckOperationFilter
                         {
                             Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
                         },
-                        new[] { PlaygroundAppConstants.BlogAPIScopeName }
+                        new[] { PlaygroundAppConstants.BlogApiScopeReadName }
                     }
                 }
             };

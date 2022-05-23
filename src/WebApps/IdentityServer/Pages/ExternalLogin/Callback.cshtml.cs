@@ -1,8 +1,8 @@
+using BN.CleanArchitecture.Infrastructure.Identity;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Services;
 using IdentityModel;
-using IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -98,7 +98,7 @@ namespace IdentityServer.Pages.ExternalLogin
 
             // check if external login is in the context of an OIDC request
             var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true, context?.Client.ClientId));
+            await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id.ToString(), user.UserName, true, context?.Client.ClientId));
 
             if (context != null)
             {
@@ -115,12 +115,12 @@ namespace IdentityServer.Pages.ExternalLogin
 
         private async Task<ApplicationUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
         {
-            var sub = Guid.NewGuid().ToString();
+            var sub = Guid.NewGuid();
 
             var user = new ApplicationUser
             {
                 Id = sub,
-                UserName = sub, // don't need a username, since the user will be using an external provider to login
+                UserName = sub.ToString(), // don't need a username, since the user will be using an external provider to login
             };
 
             // email

@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "src\WebAp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tagging", "Tagging", "{3058F50E-375A-4C5F-8E53-068DB67871D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tagging.API", "src\Services\Tagging\Tagging.API\Tagging.API.csproj", "{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tagging.API", "src\Services\Tagging\Tagging.API\Tagging.API.csproj", "{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground.OcelotApiGw", "src\ApiGateways\Playground.OcelotApiGw\Playground.OcelotApiGw.csproj", "{073E3C5A-32AD-4AC8-A7D9-E1FB0051627A}"
 EndProject

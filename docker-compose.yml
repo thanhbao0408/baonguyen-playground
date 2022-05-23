@@ -5,6 +5,11 @@ services:
     image: postgres
     volumes:
          - postgres_data:/var/lib/postgresql/data/
+   
+  identity_server_db:
+    image: postgres
+    volumes:
+         - identity_server_postgres_data:/var/lib/postgresql/data/
 
   blog.webapi:
     image: ${DOCKER_REGISTRY-}blogwebapi
@@ -21,3 +26,4 @@ services:
 
 volumes:
   postgres_data:
+  identity_server_postgres_data:

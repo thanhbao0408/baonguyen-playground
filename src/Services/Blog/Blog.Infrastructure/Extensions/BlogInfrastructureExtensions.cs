@@ -54,7 +54,8 @@ namespace Blog.Infrastructure.Extensions
                             TokenUrl = new Uri("https://localhost:5001/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {PlaygroundAppConstants.BlogAPIScopeName, PlaygroundAppConstants.BlogAPIScopeDisplayName}
+                                { PlaygroundAppConstants.BlogApiScopeReadName, PlaygroundAppConstants.BlogApiScopeReadDisplayName },
+                                { PlaygroundAppConstants.BlogApiScopeWriteName, PlaygroundAppConstants.BlogApiScopeWriteDisplayName },
                             }
                         },
                     }
@@ -82,7 +83,7 @@ namespace Blog.Infrastructure.Extensions
                 options.AddPolicy("ApiCaller", policy =>
                 {
                     policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", PlaygroundAppConstants.BlogAPIScopeName);
+                    policy.RequireClaim("scope", PlaygroundAppConstants.BlogApiScopeReadName);
                 });
 
                 //options.AddPolicy("RequireInteractiveUser", policy =>

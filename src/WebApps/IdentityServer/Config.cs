@@ -1,6 +1,9 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Test;
+using IdentityModel;
 using Playground.AppContracts;
+using System.Security.Claims;
 
 namespace IdentityServer
 {
@@ -13,14 +16,46 @@ namespace IdentityServer
             new IdentityResources.Profile(),
             };
 
+        public static IEnumerable<ApiResource> ApiResources => new ApiResource[] {
+             new ApiResource
+                {
+                    Name = PlaygroundAppConstants.BlogApiResourceName,
+                    DisplayName = PlaygroundAppConstants.BlogApiResourceDisplayName,
+                    Description = PlaygroundAppConstants.BlogApiResourceDescription,
+                    Scopes = new List<string> {
+                        PlaygroundAppConstants.BlogApiScopeReadName,
+                        PlaygroundAppConstants.BlogApiScopeWriteName,
+                    },
+                    ApiSecrets = new List<Secret> {new Secret("P@ss123".Sha256())}, // change me!
+                    UserClaims = new List<string> {"role"}
+                }
+        };
+
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope(name: PlaygroundAppConstants.BlogAPIScopeName,
-                    displayName: PlaygroundAppConstants.BlogAPIScopeDisplayName),
+                new ApiScope(name: PlaygroundAppConstants.BlogApiScopeReadName,
+                    displayName: PlaygroundAppConstants.BlogApiScopeReadDisplayName),
+                new ApiScope(name: PlaygroundAppConstants.BlogApiScopeWriteName,
+                    displayName: PlaygroundAppConstants.BlogApiScopeWriteDisplayName),
                 // new ApiScope(name: "OtherAPIs", displayName: "Other APIs"), Define other API
                 // ...
             };
+
+        public static IEnumerable<TestUser> Users => new TestUser[]
+        {  
+            new TestUser
+                {
+                    SubjectId = "b5310d5d-074c-4858-bb05-544b8ae01f2d",
+                    Username = "thanhbao0408",
+                    Password = "P@ss123",
+                    Claims = new List<Claim>
+                    {
+                        new Claim(JwtClaimTypes.Email, "thanhbao0408@gmail.com"),
+                        new Claim(JwtClaimTypes.Role, "admin")
+                    }
+                }
+        };
 
         public static IEnumerable<Client> Clients(IConfiguration configuration) =>
             new Client[]
@@ -30,13 +65,12 @@ namespace IdentityServer
                 {
                     ClientId = "api_swagger",
                     ClientName = "Swagger UI for APIs",
-                    //ClientSecrets = {new Secret("secret".Sha256())}, // change me!
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
                     RequirePkce = true,
 
-                    RedirectUris = { 
+                    RedirectUris = {
                         configuration.GetValue<string>("SwaggerUrls:BlogApiIdentityRedirectUris"),
                     },
                     AllowedCorsOrigins = {
@@ -44,9 +78,8 @@ namespace IdentityServer
                     },
                     AllowedScopes = new List<string>
                     {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        PlaygroundAppConstants.BlogAPIScopeName
+                        PlaygroundAppConstants.BlogApiScopeReadName,
+                        PlaygroundAppConstants.BlogApiScopeWriteName
                     }
                 },
 

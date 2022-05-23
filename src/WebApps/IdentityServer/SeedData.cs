@@ -1,6 +1,6 @@
-﻿using IdentityModel;
+﻿using BN.CleanArchitecture.Infrastructure.Identity;
+using IdentityModel;
 using IdentityServer.Data;
-using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -14,7 +14,7 @@ namespace IdentityServer
         {
             using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+                var context = scope.ServiceProvider.GetService<IdentityServerDbContext>();
                 context.Database.Migrate();
 
                 var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();

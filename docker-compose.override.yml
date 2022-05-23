@@ -10,6 +10,16 @@ services:
             - POSTGRES_DB=BlogDb
         ports:
             - "5432:5432"
+    
+    identity_server_db:
+        container_name: identity_server_db
+        restart: always
+        environment:
+            - POSTGRES_USER=baonguyen
+            - POSTGRES_PASSWORD=P@ss123
+            - POSTGRES_DB=IdentityServerDb
+        ports:
+            - "5433:5432"
 
     blog.webapi:
         container_name: blog.webapi

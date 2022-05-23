@@ -8,7 +8,16 @@ namespace Playground.AppContracts
 {
     public class PlaygroundAppConstants
     {
-        public const string BlogAPIScopeName = "blogAPI";
-        public const string BlogAPIScopeDisplayName = "Blog API";
+        #region Blog Resources
+        public const string BlogApiResourceName = "blogApi";
+        public const string BlogApiResourceDisplayName = "Blog API";
+        public const string BlogApiResourceDescription = "Allow the application to access Blog API on your behalf";
+
+        public const string BlogApiScopeReadName = "blogApi.read";
+        public const string BlogApiScopeReadDisplayName = "Read Access to Blog API";
+
+        public const string BlogApiScopeWriteName = "blogApi.write";
+        public const string BlogApiScopeWriteDisplayName = "Write Access to Blog API";
+        #endregion
     }
 }
