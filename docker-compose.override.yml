@@ -27,12 +27,15 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_URLS=https://+:443;http://+:80
             - ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-identity-server.pfx
             - "ConnectionStrings:postgres=Host=identity_server_db;Port=5432;Username=baonguyen;Password=P@ss123;Database=IdentityServerDb"
             - "IssuerUri=https://identityserver:5001"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-            - ${USERPROFILE}/.aspnet/https:/https/
+            - ./src/certs/IdentityServer:/https/
+            - type: bind # Using a bind volume as only this single file from `certs` directory should end up in the container.
+              source: ./src/certs/aspnetapp-root-cert.cer
+              target: /https-root/aspnetapp-root-cert.cer
         depends_on:
             - identity_server_db
         ports:
@@ -45,13 +48,16 @@ services:
             - ASPNETCORE_ENVIRONMENT=Development
             - ASPNETCORE_URLS=https://+:443;http://+:80
             - ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-web-api.pfx
             - "ConnectionStrings:postgres=Host=blogdb;Port=5432;Username=baonguyen;Password=P@ss123;Database=BlogPostgres"
             - "SwaggerConfig:AuthorizationBaseUrl=https://localhost:5001"
             - "IdentityServer:AuthorityUrl=https://identityserver:5001"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-            - ${USERPROFILE}/.aspnet/https:/https/
+            - ./src/certs/Api:/https/
+            - type: bind # Using a bind volume as only this single file from `certs` directory should end up in the container.
+              source: ./src/certs/aspnetapp-root-cert.cer
+              target: /https-root/aspnetapp-root-cert.cer
         depends_on:
             - blogdb
             - identityserver

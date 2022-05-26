@@ -1,3 +1,5 @@
+# Origin Source: https://mjarosie.github.io/dev/2020/09/24/running-identityserver4-on-docker-with-https.html
+
 # Source: https://stackoverflow.com/a/62060315
 # Generate self-signed certificate to be used by IdentityServer.
 # When using localhost - API cannot see the IdentityServer from within the docker-compose'd network.
@@ -7,19 +9,11 @@ $ErrorActionPreference = "Stop"
 
 $rootCN = "IdentityServerDockerDemoRootCert"
 $identityServerCNs = "identityserver", "localhost"
-$blogWebApiCNs = "blog.webapi", "localhost"
-$taggingWebApiCNs = "tagging.webapi", "localhost"
-$gymWebApiCNs = "gym.webapi", "localhost"
-$cycleWebApiCNs = "cycle.webapi", "localhost"
-$noteBookmarkWebApiCNs = "noteBookmark.webapi", "localhost"
+$webApiCNs = "blog.webapi", "tagging.webapi", "gym.webapi", "cycling.webapi","noteBookmark.webapi", "localhost"
 
 $alreadyExistingCertsRoot = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq "CN=$rootCN"}
 $alreadyExistingCertsIdentityServer = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $identityServerCNs[0])}
-$alreadyExistingCertsBlogApi = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $blogWebApiCNs[0])}
-$alreadyExistingCertsTaggingApi = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $taggingWebApiCNs[0])}
-$alreadyExistingCertsGymApi = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $gymWebApiCNs[0])}
-$alreadyExistingCertsCycleApi = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $cycleWebApiCNs[0])}
-$alreadyExistingCertsNoteBookmarkApi = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $noteBookmarkWebApiCNs[0])}
+$alreadyExistingCertsApi = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object {$_.Subject -eq ("CN={0}" -f $webApiCNs[0])}
 
 if ($alreadyExistingCertsRoot.Count -eq 1) {
     Write-Output "Skipping creating Root CA certificate as it already exists."
@@ -36,48 +30,16 @@ if ($alreadyExistingCertsIdentityServer.Count -eq 1) {
     $identityServerCert = New-SelfSignedCertificate -DnsName $identityServerCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 }
 
-if ($alreadyExistingCertsBlogApi.Count -eq 1) {
+if ($alreadyExistingCertsApi.Count -eq 1) {
     Write-Output "Skipping creating API certificate as it already exists."
-    $webApiCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsBlogApi[0]
+    $webApiCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsApi[0]
 } else {
     # Create a SAN cert for both web-api and localhost.
-    $webApiCert = New-SelfSignedCertificate -DnsName $blogWebApiCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
-
-if ($alreadyExistingCertsTaggingApi.Count -eq 1) {
-    Write-Output "Skipping creating API certificate as it already exists."
-    $webApiCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsBlogApi[0]
-} else {
-    # Create a SAN cert for both web-api and localhost.
-    $webApiCert = New-SelfSignedCertificate -DnsName $taggingWebApiCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
-
-if ($alreadyExistingCertsGymApi.Count -eq 1) {
-    Write-Output "Skipping creating API certificate as it already exists."
-    $webApiCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsBlogApi[0]
-} else {
-    # Create a SAN cert for both web-api and localhost.
-    $webApiCert = New-SelfSignedCertificate -DnsName $gymWebApiCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
-
-if ($alreadyExistingCertsCycleApi.Count -eq 1) {
-    Write-Output "Skipping creating API certificate as it already exists."
-    $webApiCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsBlogApi[0]
-} else {
-    # Create a SAN cert for both web-api and localhost.
-    $webApiCert = New-SelfSignedCertificate -DnsName $blogWebApiCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
-
-if ($alreadyExistingCertsNoteBookmarkApi.Count -eq 1) {
-    Write-Output "Skipping creating API certificate as it already exists."
-    $webApiCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsBlogApi[0]
-} else {
-    # Create a SAN cert for both web-api and localhost.
-    $webApiCert = New-SelfSignedCertificate -DnsName $blogWebApiCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
+    $webApiCert = New-SelfSignedCertificate -DnsName $webApiCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 }
 
 # Export it for docker container to pick up later.
-$password = ConvertTo-SecureString -String "password" -Force -AsPlainText
+$password = ConvertTo-SecureString -String "B@0probmt955" -Force -AsPlainText
 
 $rootCertPathPfx = "certs"
 $identityServerCertPath = "src/IdentityServer/certs"
