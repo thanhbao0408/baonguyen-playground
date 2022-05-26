@@ -25,25 +25,39 @@ services:
         container_name: identityserver
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=https://+:443;http://+:80
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
             - "ConnectionStrings:postgres=Host=identity_server_db;Port=5432;Username=baonguyen;Password=P@ss123;Database=IdentityServerDb"
-            - "IssuerUri=http://host.docker.internal:5000"
+            - "IssuerUri=https://identityserver:5001"
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${USERPROFILE}/.aspnet/https:/https/
         depends_on:
             - identity_server_db
         ports:
             - "5000:80"
+            - "5001:443"
 
     blog.webapi:
         container_name: blog.webapi
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=https://+:443;http://+:80
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
             - "ConnectionStrings:postgres=Host=blogdb;Port=5432;Username=baonguyen;Password=P@ss123;Database=BlogPostgres"
-            - "SwaggerConfig:AuthorizationBaseUrl=http://host.docker.internal:5000"
-            - "IdentityServer:AuthorityUrl=http://identityserver:5000"
+            - "SwaggerConfig:AuthorizationBaseUrl=https://localhost:5001"
+            - "IdentityServer:AuthorityUrl=https://identityserver:5001"
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${USERPROFILE}/.aspnet/https:/https/
         depends_on:
             - blogdb
             - identityserver
         ports:
-            - "8000:80"
+            - "7000:80"
+            - "8000:443"
             
     playground.apiocelotgw:
         container_name: ocelotapigw

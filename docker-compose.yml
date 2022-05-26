@@ -29,8 +29,8 @@ services:
       context: .
       dockerfile: src/ApiGateways/Playground.OcelotApiGw/Dockerfile
 
-
 volumes:
   postgres_data:
   identity_server_postgres_data:
+
 

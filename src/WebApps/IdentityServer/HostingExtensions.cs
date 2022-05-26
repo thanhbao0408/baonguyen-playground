@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace IdentityServer
 {
@@ -29,7 +32,6 @@ namespace IdentityServer
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                     .AddEntityFrameworkStores<IdentityServerDbContext>()
                 .AddDefaultTokenProviders();
-
 
             builder.Services
                 .AddIdentityServer(options =>
@@ -63,19 +65,6 @@ namespace IdentityServer
 
             builder.Services.AddScoped<ApplicationUserManager>();
             builder.Services.AddScoped<ApplicationSignInManager>();
-
-            // Adjust to this (or similar)
-            builder.Services
-               .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-               .AddCookie(options =>
-               {
-                   // add an instance of the patched manager to the options:
-                   options.CookieManager = new ChunkingCookieManager();
-
-                   options.Cookie.HttpOnly = true;
-                   options.Cookie.SameSite = SameSiteMode.None;
-                   options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-               });
 
             return builder.Build();
         }
