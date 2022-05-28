@@ -3,11 +3,11 @@
     // Blog API
     {
       "DownstreamPathTemplate": "/api/v1/articles",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "blog.webapi",
-          "Port": "80"
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/articles",
@@ -16,15 +16,19 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/articles/{slug}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "blog.webapi",
-          "Port": "80"
+          "Port": "443"
         }
       ],
       "UpstreamPathTemplate": "/articles/{slug}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityApiKey",
+        "AllowedScopes": []
+      }
     }
   ],
   "GlobalConfiguration": {

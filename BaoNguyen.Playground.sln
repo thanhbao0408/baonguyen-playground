@@ -43,15 +43,34 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Contracts", "src\Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BN.CleanArchitecture.Contracts", "src\BN.CleanArchitecture\BN.CleanArchitecture.Contracts\BN.CleanArchitecture.Contracts.csproj", "{3875F7BA-96D2-4C80-8902-75249684E465}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "src\WebApps\IdentityServer\IdentityServer.csproj", "{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tagging", "Tagging", "{3058F50E-375A-4C5F-8E53-068DB67871D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tagging.API", "src\Services\Tagging\Tagging.API\Tagging.API.csproj", "{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground.OcelotApiGw", "src\ApiGateways\Playground.OcelotApiGw\Playground.OcelotApiGw.csproj", "{073E3C5A-32AD-4AC8-A7D9-E1FB0051627A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "src\WebApps\WebApplication1\WebApplication1.csproj", "{E0DBF7E6-5FBD-4DFF-AA74-8DECB4DEBD65}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{9D90165E-ED8F-42BF-9CA2-8FCDCBB9499B}"
+	ProjectSection(SolutionItems) = preProject
+		docker-entrypoint.sh = docker-entrypoint.sh
+		src\_\generate_docker_ssl_cert.ps1 = src\_\generate_docker_ssl_cert.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "certs", "certs", "{707A7C6F-0406-4C68-9472-76B07FFEF9C0}"
+	ProjectSection(SolutionItems) = preProject
+		src\certs\aspnetapp-root-cert.cer = src\certs\aspnetapp-root-cert.cer
+		src\certs\aspnetapp-root-cert.pfx = src\certs\aspnetapp-root-cert.pfx
+		src\certs\Api\aspnetapp-web-api.pfx = src\certs\Api\aspnetapp-web-api.pfx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{810A9499-6D2E-45AB-BFAC-845AE5E1401F}"
+	ProjectSection(SolutionItems) = preProject
+		src\certs\Api\aspnetapp-web-api.pfx = src\certs\Api\aspnetapp-web-api.pfx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{E7980CA5-EA90-4AD5-8E67-D7B062B14D6D}"
+	ProjectSection(SolutionItems) = preProject
+		src\certs\IdentityServer\aspnetapp-identity-server.pfx = src\certs\IdentityServer\aspnetapp-identity-server.pfx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,10 +130,6 @@ Global
 		{3875F7BA-96D2-4C80-8902-75249684E465}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3875F7BA-96D2-4C80-8902-75249684E465}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3875F7BA-96D2-4C80-8902-75249684E465}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -123,10 +138,6 @@ Global
 		{073E3C5A-32AD-4AC8-A7D9-E1FB0051627A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{073E3C5A-32AD-4AC8-A7D9-E1FB0051627A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{073E3C5A-32AD-4AC8-A7D9-E1FB0051627A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E0DBF7E6-5FBD-4DFF-AA74-8DECB4DEBD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E0DBF7E6-5FBD-4DFF-AA74-8DECB4DEBD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E0DBF7E6-5FBD-4DFF-AA74-8DECB4DEBD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E0DBF7E6-5FBD-4DFF-AA74-8DECB4DEBD65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -146,11 +157,12 @@ Global
 		{ADDF913A-4734-407E-ADC2-B6FE70AB9EBA} = {3475EC3D-B0CD-4CA2-A8DF-D7567F2D397A}
 		{D7CAED8B-30D1-4B7A-BEA1-D72308B3483A} = {3848AA01-38A3-4D7A-8402-456EE0C2AD17}
 		{3875F7BA-96D2-4C80-8902-75249684E465} = {9F259412-6A15-4BE1-84A6-545A35D2A3CE}
-		{C2C5EC46-FF3D-4CA7-89FC-AF641A769B88} = {08412BE6-F041-483D-B8D2-50841BEF2FBF}
 		{3058F50E-375A-4C5F-8E53-068DB67871D1} = {A2119566-67DD-44EC-B17B-25420F585F44}
 		{A502CF5A-6EA6-4297-A7DF-9EA65D1A8127} = {3058F50E-375A-4C5F-8E53-068DB67871D1}
 		{073E3C5A-32AD-4AC8-A7D9-E1FB0051627A} = {C6AF22CA-272F-4085-A5BE-4B99AF6F70D9}
-		{E0DBF7E6-5FBD-4DFF-AA74-8DECB4DEBD65} = {08412BE6-F041-483D-B8D2-50841BEF2FBF}
+		{707A7C6F-0406-4C68-9472-76B07FFEF9C0} = {9D90165E-ED8F-42BF-9CA2-8FCDCBB9499B}
+		{810A9499-6D2E-45AB-BFAC-845AE5E1401F} = {707A7C6F-0406-4C68-9472-76B07FFEF9C0}
+		{E7980CA5-EA90-4AD5-8E67-D7B062B14D6D} = {707A7C6F-0406-4C68-9472-76B07FFEF9C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D946A9F-091A-4D5E-B527-048A921BC582}

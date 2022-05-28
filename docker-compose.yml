@@ -1,36 +1,51 @@
 version: '3.4'
 
-services:   
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: playground-nginx
+    ports:
+        - '8080:80'
+        - '8000:443'
+    volumes:
+        - '/var/run/docker.sock:/tmp/docker.sock:ro'
+        - './shared/nginx/certs:/etc/nginx/certs:ro'
+    networks:
+        proxy: null
+        playground:
+            aliases:
+                - blog-api.playground.local
+                - playground-gateway.playground.local
+    restart: always
+
   blogdb:
     image: postgres
     volumes:
          - postgres_data:/var/lib/postgresql/data/
-   
-  identity_server_db:
-    image: postgres
-    volumes:
-         - identity_server_postgres_data:/var/lib/postgresql/data/
-
-  identityserver:
-    image: ${DOCKER_REGISTRY-}identityserver
-    build:
-      context: .
-      dockerfile: src/WebApps/IdentityServer/Dockerfile
 
   blog.webapi:
     image: ${DOCKER_REGISTRY-}blogwebapi
+    environment:
+      - VIRTUAL_HOST=blog-api.playground.local
     build:
       context: .
       dockerfile: src/Services/Blog/Blog.WebApi/Dockerfile
 
   playground.apiocelotgw:
     image: ${DOCKER_REGISTRY-}ocelotapigw
+    environment:
+      - VIRTUAL_HOST=playground-gateway.playground.local
     build:
       context: .
       dockerfile: src/ApiGateways/Playground.OcelotApiGw/Dockerfile
 
 volumes:
-  postgres_data:
-  identity_server_postgres_data:
+    postgres_data:
 
-
+networks:
+    proxy:
+        name: playgroundidentityserver_proxy
+        driver: bridge
+    playground:
+        name: playgroundidentityserver_identityserverui
+        driver: bridge

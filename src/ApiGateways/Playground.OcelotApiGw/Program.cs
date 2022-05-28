@@ -1,17 +1,25 @@
-﻿using BN.Common.Logging;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.IdentityModel.Tokens;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 {
     config.AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json");
 });
+
+var authenticationProviderKey = "IdentityApiKey";
+builder.Services.AddAuthentication()
+            .AddJwtBearer(authenticationProviderKey, options =>
+            {
+                options.Authority = builder.Configuration.GetValue<string>("IdentityServer:AuthorityUrl");
+                //options.RequireHttpsMetadata = builder.Configuration.GetValue<bool>("IdentityServer:RequireHttps");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            });
 
 builder.Services.AddOcelot()
     .AddCacheManager(config =>

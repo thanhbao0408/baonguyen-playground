@@ -10,69 +10,57 @@ services:
             - POSTGRES_DB=BlogDb
         ports:
             - "5432:5432"
-    
-    identity_server_db:
-        container_name: identity_server_db
-        restart: always
-        environment:
-            - POSTGRES_USER=baonguyen
-            - POSTGRES_PASSWORD=P@ss123
-            - POSTGRES_DB=IdentityServerDb
-        ports:
-            - "5433:5432"
-
-    identityserver:
-        container_name: identityserver
-        environment:
-            - ASPNETCORE_ENVIRONMENT=Development
-            - ASPNETCORE_URLS=https://+:443;http://+:80
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-identity-server.pfx
-            - "ConnectionStrings:postgres=Host=identity_server_db;Port=5432;Username=baonguyen;Password=P@ss123;Database=IdentityServerDb"
-            - "IssuerUri=https://identityserver:5001"
-        volumes:
-            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-            - ./src/certs/IdentityServer:/https/
-            - type: bind # Using a bind volume as only this single file from `certs` directory should end up in the container.
-              source: ./src/certs/aspnetapp-root-cert.cer
-              target: /https-root/aspnetapp-root-cert.cer
-        depends_on:
-            - identity_server_db
-        ports:
-            - "5000:80"
-            - "5001:443"
 
     blog.webapi:
         container_name: blog.webapi
         environment:
+            - VIRTUAL_HOST=blog-api.playground.local
+            - DockerConfiguration__UpdateCaCertificate=true
             - ASPNETCORE_ENVIRONMENT=Development
-            - ASPNETCORE_URLS=https://+:443;http://+:80
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-web-api.pfx
+            #- ASPNETCORE_URLS=https://+:443;http://+:80
+            #- ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
+            #- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-web-api.pfx
             - "ConnectionStrings:postgres=Host=blogdb;Port=5432;Username=baonguyen;Password=P@ss123;Database=BlogPostgres"
-            - "SwaggerConfig:AuthorizationBaseUrl=https://localhost:5001"
-            - "IdentityServer:AuthorityUrl=https://identityserver:5001"
+            - "SwaggerConfig:AuthorizationBaseUrl=https://sts.skoruba.local"
+            - "IdentityServer:AuthorityUrl=https://sts.skoruba.local"
+            - "IdentityServer:RequireHttps=false"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-            - ./src/certs/Api:/https/
-            - type: bind # Using a bind volume as only this single file from `certs` directory should end up in the container.
-              source: ./src/certs/aspnetapp-root-cert.cer
-              target: /https-root/aspnetapp-root-cert.cer
+            - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+            #- ./src/certs/Api:/https/
+            #- type: bind # Using a bind volume as only this single file from `certs` directory should end up in the container.
+            #  source: ./src/certs/aspnetapp-root-cert.cer
+            #  target: /https-root/aspnetapp-root-cert.cer
         depends_on:
             - blogdb
-            - identityserver
-        ports:
-            - "7000:80"
-            - "8000:443"
+        networks:
+          playground: null
+        #ports:
+        #    - "7000:80"
+        #    - "8000:443"
             
     playground.apiocelotgw:
         container_name: ocelotapigw
         environment:
+            - VIRTUAL_HOST=playground-gateway.playground.local
+            - DockerConfiguration__UpdateCaCertificate=true
             - ASPNETCORE_ENVIRONMENT=Development
+            #- ASPNETCORE_URLS=https://+:443;http://+:80
+            #- ASPNETCORE_Kestrel__Certificates__Default__Password=B@0probmt955
+            #- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-web-api.pfx
+            - "IdentityServer:AuthorityUrl=https://sts.skoruba.local"
+            - "IdentityServer:RequireHttps=false"
             #- "ElasticConfiguration:Uri=http://es01:9200"
+        volumes:
+            - './shared/nginx/certs/cacerts.crt:/usr/local/share/ca-certificates/cacerts.crt'
+            #- ./src/certs/Api:/https/
+            #- type: bind # Using a bind volume as only this single file from `certs` directory should end up in the container.
+            #  source: ./src/certs/aspnetapp-root-cert.cer
+            #  target: /https-root/aspnetapp-root-cert.cer
         depends_on:
-            - identityserver
             - blog.webapi
-        ports:
-            - "8048:80"
-
+        networks:
+          playground: null
+        #ports:
+        #    - "7048:80"
+        #    - "8048:443"

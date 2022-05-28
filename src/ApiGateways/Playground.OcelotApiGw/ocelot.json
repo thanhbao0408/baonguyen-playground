@@ -6,7 +6,7 @@
     // Blog API
     {
       "DownstreamPathTemplate": "/api/v1/articles",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -19,7 +19,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/articles/{slug}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",

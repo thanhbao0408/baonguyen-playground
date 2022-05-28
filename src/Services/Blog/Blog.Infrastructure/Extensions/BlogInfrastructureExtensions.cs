@@ -56,9 +56,10 @@ namespace Blog.Infrastructure.Extensions
                             {
                                 { PlaygroundAppConstants.BlogApiScopeReadName, PlaygroundAppConstants.BlogApiScopeReadDisplayName },
                                 { PlaygroundAppConstants.BlogApiScopeWriteName, PlaygroundAppConstants.BlogApiScopeWriteDisplayName },
-                            }
+                            },
                         },
-                    }
+                        
+                    },
                 });
                 options.OperationFilter<BlogAuthorizeCheckOperationFilter>();
             });
@@ -76,7 +77,7 @@ namespace Blog.Infrastructure.Extensions
                         NameClaimType = "name",
                         RoleClaimType = "role"
                     };
-                    options.RequireHttpsMetadata = false;
+                    //options.RequireHttpsMetadata = false;
                 });
 
             services.AddAuthorization(options =>
