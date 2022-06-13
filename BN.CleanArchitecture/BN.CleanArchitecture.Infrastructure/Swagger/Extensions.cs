@@ -45,7 +45,7 @@ public static class Extensions
                     options.IncludeXmlComments(xmlFile);
                 }
 
-                if(swaggerGenOptionsBuilder != null)
+                if (swaggerGenOptionsBuilder != null)
                 {
                     swaggerGenOptionsBuilder(options);
                 }
