@@ -60,8 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nginx", "nginx", "{1A00E5E5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vhost.d", "vhost.d", "{B962A905-4237-430B-8A05-4D013BE26EC1}"
 	ProjectSection(SolutionItems) = preProject
-		shared\nginx\vhost.d\admin.skoruba.local_location = shared\nginx\vhost.d\admin.skoruba.local_location
-		shared\nginx\vhost.d\sts.skoruba.local_location = shared\nginx\vhost.d\sts.skoruba.local_location
+		shared\nginx\vhost.d\is-admin.playground.local_location = shared\nginx\vhost.d\is-admin.playground.local_location
+		shared\nginx\vhost.d\sts.playground.local_location = shared\nginx\vhost.d\sts.playground.local_location
 	EndProjectSection
 EndProject
 Global

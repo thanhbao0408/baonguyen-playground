@@ -13,6 +13,8 @@ using Playground.IdentityServer.STS.Identity.Configuration;
 using Playground.IdentityServer.STS.Identity.Configuration.Constants;
 using Playground.IdentityServer.STS.Identity.Configuration.Interfaces;
 using Playground.IdentityServer.STS.Identity.Helpers;
+using Microsoft.AspNetCore.Http;
+using Duende.IdentityServer.Extensions;
 
 namespace Playground.IdentityServer.STS.Identity
 {
@@ -59,6 +61,12 @@ namespace Playground.IdentityServer.STS.Identity
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(async (ctx, next) =>
+            {
+                ctx.SetIdentityServerOrigin(Configuration.GetValue<string>("AdvancedConfiguration:IssuerUri"));
+                await next();
+            });
+
             app.UseCookiePolicy();
 
             if (env.IsDevelopment())

@@ -84,7 +84,7 @@
             {
                 "ClientId": "AdminClientId",
                 "ClientName": "AdminClientId",
-                "ClientUri": "https://admin.skoruba.local",
+                "ClientUri": "https://is-admin.playground.local",
                 "AllowedGrantTypes": [
                     "authorization_code"
                 ],
@@ -95,14 +95,14 @@
                     }
                 ],
                 "RedirectUris": [
-                    "https://admin.skoruba.local/signin-oidc"
+                    "https://is-admin.playground.local/signin-oidc"
                 ],
-                "FrontChannelLogoutUri": "https://admin.skoruba.local/signout-oidc",
+                "FrontChannelLogoutUri": "https://is-admin.playground.local/signout-oidc",
                 "PostLogoutRedirectUris": [
-                    "https://admin.skoruba.local/signout-callback-oidc"
+                    "https://is-admin.playground.local/signout-callback-oidc"
                 ],
                 "AllowedCorsOrigins": [
-                    "https://admin.skoruba.local"
+                    "https://is-admin.playground.local"
                 ],
                 "AllowedScopes": [
                     "openid",
@@ -120,13 +120,13 @@
                 "RequireClientSecret": false,
                 "RequirePkce": true,
                 "RedirectUris": [
-                    "https://admin-api.skoruba.local/swagger/oauth2-redirect.html"
+                    "https://is-admin-api.playground.local/swagger/oauth2-redirect.html"
                 ],
                 "AllowedScopes": [
                     "AdminClientId_api"
                 ],
                 "AllowedCorsOrigins": [
-                    "https://admin-api.skoruba.local"
+                    "https://is-admin-api.playground.local"
                 ]
             }
         ]
