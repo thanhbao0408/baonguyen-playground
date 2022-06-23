@@ -2,6 +2,7 @@ using Playground.Infrastructure.EfCore;
 using Playground.Infrastructure.EfCore.DbContext;
 using Playground.Infrastructure.Extensions;
 using Serilog;
+using Skoruba.Duende.IdentityServer.Shared.Configuration.Helpers;
 //using Playground.Infrastructure.;
 using ApiAnchor = Playground.WebApi.V1.Anchor;
 
@@ -14,6 +15,8 @@ builder.Host.UseSerilog((ctx, lc) =>
         .MinimumLevel.Debug()
         .WriteTo.Console()
         .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day));
+
+DockerHelpers.ApplyDockerConfiguration(builder.Configuration);
 
 // Add Core services
 builder.Services
