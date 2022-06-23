@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Playground.Application.Contracts.Constants;
 using CoreAnchor = Playground.Core.Anchor;
+using ApplicationAnchor = Playground.Application.Anchor;
 
 namespace Playground.Infrastructure.Extensions
 {
@@ -33,8 +34,8 @@ namespace Playground.Infrastructure.Extensions
             });
 
             services.AddHttpContextAccessor();
-            services.AddCustomMediatR(new[] { typeof(CoreAnchor) });
-            services.AddCustomValidators(new[] { typeof(CoreAnchor) });
+            services.AddCustomMediatR(new[] { typeof(ApplicationAnchor) });
+            services.AddCustomValidators(new[] { typeof(ApplicationAnchor) });
             services.AddAutoMapperConfig(typeof(CoreAnchor));
 
             services.AddControllers();

@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure\BN.CleanArchitecture.Infrastructure.csproj" />
     <ProjectReference Include="..\Playground.Application.Contracts\Playground.Application.Contracts.csproj" />
+	  <ProjectReference Include="..\Playground.Application\Playground.Application.csproj" />
     <ProjectReference Include="..\Playground.Core\Playground.Core.csproj" />
   </ItemGroup>
 
