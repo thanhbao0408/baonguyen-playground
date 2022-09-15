@@ -10,6 +10,11 @@ public class DbContextBase : DbContext
 {
     private readonly IMediator? _mediator;
 
+    public DbContextBase()
+    {
+
+    }
+
     public DbContextBase(DbContextOptions options) : base(options)
     {
     }

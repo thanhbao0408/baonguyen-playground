@@ -10,6 +10,29 @@ namespace BN.CleanArchitecture.Infrastructure.EfCore;
 
 public static class InfrastructureEfCoreExtensions
 {
+    public static IServiceCollection AddSQLDbContext<TDbContext>(this IServiceCollection services, 
+        string connString, Action<DbContextOptionsBuilder> doMoreDbContextOptionsConfigure = null,
+        Action<IServiceCollection> doMoreActions = null) 
+        where TDbContext : DbContext
+    {
+        services.AddDbContext<TDbContext>(options =>
+        {
+            options.UseSqlServer(connString, sqlOptions =>
+            {
+                sqlOptions.MigrationsAssembly(typeof(TDbContext).Assembly.GetName().Name);
+                sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            });
+
+            doMoreDbContextOptionsConfigure?.Invoke(options);
+        });
+
+        services.AddDatabaseDeveloperPageExceptionFilter();
+
+        doMoreActions?.Invoke(services);
+
+        return services;
+    }
+
     public static IServiceCollection AddPostgresDbContext<TDbContext>(this IServiceCollection services,
         string connString, Action<DbContextOptionsBuilder> doMoreDbContextOptionsConfigure = null,
         Action<IServiceCollection> doMoreActions = null)

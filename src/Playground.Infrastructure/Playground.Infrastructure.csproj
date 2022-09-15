@@ -7,9 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure.EfCore\BN.CleanArchitecture.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\..\BN.CleanArchitecture\BN.CleanArchitecture.Infrastructure\BN.CleanArchitecture.Infrastructure.csproj" />
     <ProjectReference Include="..\Playground.Application.Contracts\Playground.Application.Contracts.csproj" />
-	  <ProjectReference Include="..\Playground.Application\Playground.Application.csproj" />
+	<ProjectReference Include="..\Playground.Application\Playground.Application.csproj" />
     <ProjectReference Include="..\Playground.Core\Playground.Core.csproj" />
   </ItemGroup>
 
