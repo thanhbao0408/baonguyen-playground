@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Playground.Application": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:59624;http://localhost:59626"
+    }
+  }
+}

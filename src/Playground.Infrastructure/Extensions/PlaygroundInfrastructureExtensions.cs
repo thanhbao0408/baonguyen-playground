@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Playground.Application.Contracts.Constants;
+using Serilog;
 using ApplicationAnchor = Playground.Application.Anchor;
 
 namespace Playground.Infrastructure.Extensions
@@ -23,6 +24,8 @@ namespace Playground.Infrastructure.Extensions
         public static IServiceCollection AddCoreServices(this IServiceCollection services,
             IConfiguration config, IWebHostEnvironment env, Type apiType)
         {
+            services.AddRazorPages();
+
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsName, policy =>
@@ -106,27 +109,61 @@ namespace Playground.Infrastructure.Extensions
 
         public static IApplicationBuilder UseCoreApplication(this WebApplication app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseCors(CorsName);
+
+            app.UseStaticFiles();
+
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-            // app.UseCloudEvents();
+            var isUseIdentityServer = app.Configuration.GetValue<bool>("IdentityServer:Enabled");
+            if (isUseIdentityServer)
+            {
+                app.UseIdentityServer();
+            }
+            else
+            {
+                app.UseAuthorization();
+            }
 
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapSubscribeHandler();
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
                 //.RequireAuthorization(PlaygroundConsts.PlaygroundAdministrationPolicy);
+
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+                //.RequireAuthorization();
+
+                if (isUseIdentityServer)
+                {
+                    endpoints.MapRazorPages()
+                    .RequireAuthorization();
+                }
+
             });
 
             IApiVersionDescriptionProvider? provider = app.Services.GetService<IApiVersionDescriptionProvider>();
-            return app.UseSwagger(provider, app.Configuration);
+
+            app.UseSwagger(provider, app.Configuration);
+            return app;
         }
     }
 }
