@@ -24,8 +24,6 @@ namespace Playground.Infrastructure.Extensions
         public static IServiceCollection AddCoreServices(this IServiceCollection services,
             IConfiguration config, IWebHostEnvironment env, Type apiType)
         {
-            services.AddRazorPages();
-
             services.AddCors(options =>
             {
                 options.AddPolicy(CorsName, policy =>
@@ -39,7 +37,8 @@ namespace Playground.Infrastructure.Extensions
             services.AddCustomValidators(new[] { typeof(ApplicationAnchor) });
             services.AddAutoMapperConfig(typeof(ApplicationAnchor));
 
-            services.AddControllers();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
 
             services.AddSwagger(apiType
             //, options =>
