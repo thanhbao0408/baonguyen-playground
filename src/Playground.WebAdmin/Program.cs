@@ -18,7 +18,9 @@ builder.Host.UseSerilog((ctx, lc) =>
 builder.Services
     .AddEfCoreServices(builder.Configuration)
     .AddIdentityServices(builder.Configuration)
-    .AddCoreServices(builder.Configuration, builder.Environment, typeof(ApiAnchor));
+    .AddCoreServices(builder.Configuration, builder.Environment, typeof(ApiAnchor))
+    .AddCustomAuthentication(builder.Configuration);
+
 
 builder.Services.AddControllersWithViews();
 

@@ -37,7 +37,7 @@ namespace Playground.Infrastructure.Extensions
             services.AddCustomValidators(new[] { typeof(ApplicationAnchor) });
             services.AddAutoMapperConfig(typeof(ApplicationAnchor));
 
-            services.AddControllersWithViews()
+            services.AddMvc()
                 .AddRazorRuntimeCompilation();
 
             services.AddSwagger(apiType
@@ -65,23 +65,6 @@ namespace Playground.Infrastructure.Extensions
             //    options.OperationFilter<PlaygroundAuthorizeCheckOperationFilter>();
             //}
             );
-
-            services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
-                {
-                    options.Authority = "https://localhost:5001";
-                    //options.RequireHttpsMetadata = config.GetValue<bool>("ApiConfiguration:RequireHttpsMetadata");
-                    //options.RequireHttpsMetadata = false;
-                    options.MapInboundClaims = false;
-
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateAudience = false,
-                        ValidTypes = new[] { "at+jwt" },
-                        NameClaimType = "name",
-                        RoleClaimType = "role"
-                    };
-                });
 
             // TODO
             services.AddAuthorization(options =>
@@ -137,8 +120,9 @@ namespace Playground.Infrastructure.Extensions
             }
             else
             {
-                app.UseAuthorization();
+                app.UseAuthentication();
             }
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

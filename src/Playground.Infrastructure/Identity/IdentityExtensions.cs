@@ -1,9 +1,9 @@
 ﻿using BN.CleanArchitecture.Infrastructure.EfCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Playground.Infrastructure.Data;
 using Playground.Infrastructure.Data.DbContext;
-using Duende.IdentityServer;
 
 namespace Playground.Infrastructure.Identity
 {
@@ -21,10 +21,17 @@ namespace Playground.Infrastructure.Identity
                 svc => svc.AddRepository(typeof(Repository<,>))
             );
 
-            services.AddDefaultIdentity<PlaygroundUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services
+                //.AddIdentity<PlaygroundUser, IdentityRole>()
+                //.AddDefaultIdentity<PlaygroundUser>()
+                .AddIdentityCore<PlaygroundUser>()
+                .AddRoles<IdentityRole>()
+                .AddSignInManager()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<PlaygroundIdentityDbContext>();
 
-            var isUseIdentityServer = config.GetValue<Boolean>("IdentityServer:Enabled");
+            var isUseIdentityServer = config.GetValue<bool>("IdentityServer:Enabled");
 
             if (isUseIdentityServer)
             {
@@ -44,20 +51,7 @@ namespace Playground.Infrastructure.Identity
                    .AddInMemoryClients(Config.Clients)
                    .AddAspNetIdentity<PlaygroundUser>();
             }
-
-            services.AddAuthentication();
-                // TODO Add an 3rd login options
-                //.AddGoogle(options =>
-                //{
-                //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                //    // register your IdentityServer with Google at https://console.developers.google.com
-                //    // enable the Google+ API
-                //    // set the redirect URI to https://localhost:5001/signin-google
-                //    options.ClientId = "copy client ID from Google here";
-                //    options.ClientSecret = "copy client secret from Google here";
-                //});
-
+                
             return services;
         }
     }
