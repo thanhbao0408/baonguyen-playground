@@ -150,6 +150,7 @@ namespace Playground.Infrastructure.Extensions
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
                 //.RequireAuthorization();
+                endpoints.MapRazorPages();
 
                 if (isUseIdentityServer)
                 {
