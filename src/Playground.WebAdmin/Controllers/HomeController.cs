@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace Playground.WebAdmin.Controllers
 {
-    [Route("[controller]/[action]")]
     public class HomeController : BaseMvcController
     {
         private readonly ILogger<HomeController> _logger;

@@ -12,8 +12,8 @@ using Playground.Infrastructure.Data.DbContext;
 namespace Playground.Infrastructure.Data.Migrations.Identity
 {
     [DbContext(typeof(PlaygroundIdentityDbContext))]
-    [Migration("20220916184908_InitializeIdneityDb")]
-    partial class InitializeIdneityDb
+    [Migration("20220920110909_InitializeIdentityDb")]
+    partial class InitializeIdentityDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

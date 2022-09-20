@@ -28,6 +28,8 @@
   <partial name="CoreUI/_Styles"/>
 
     <script src="https://kit.fontawesome.com/ce08f5d1fb.js" crossorigin="anonymous"></script>
+
+    @await RenderSectionAsync("Styles", required: false)
   
 </head>
 
@@ -43,6 +45,9 @@
   </div>
 
     <partial name="CoreUI/_Scripts" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

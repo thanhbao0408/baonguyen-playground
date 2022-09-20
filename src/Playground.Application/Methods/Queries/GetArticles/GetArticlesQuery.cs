@@ -18,7 +18,7 @@ namespace Playground.Application.Methods.Queries
             public Validator()
             {
                 RuleFor(x => x.Page)
-                    .GreaterThanOrEqualTo(1).WithMessage("Page should at least greater than or equal to 1.");
+                    .GreaterThanOrEqualTo(0).WithMessage("Page should at least greater than or equal to 0.");
 
                 RuleFor(x => x.PageSize)
                     .GreaterThanOrEqualTo(1).WithMessage("PageSize should at least greater than or equal to 1.");

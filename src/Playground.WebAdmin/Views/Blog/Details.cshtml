@@ -1,0 +1,23 @@
+﻿@using Playground.Application.Contracts.Dtos.Blog.Articles
+@model ArticleDetailDto
+
+@{
+    Layout = "CoreUI/_LayoutCoreUI";
+
+    var isCreateNewArticle = Model == null;
+    if(isCreateNewArticle){
+        ViewData["Title"] = "Create new article";
+    }
+    else {
+        ViewData["Title"] = Model.Title;
+    }
+}
+
+@if(isCreateNewArticle)
+{
+    <h1>Create new article</h1>
+}
+else 
+{
+    <h1>Modify Article @Model.Title</h1>
+}

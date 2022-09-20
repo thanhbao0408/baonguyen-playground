@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Playground.Infrastructure.Data.Migrations.Identity
 {
-    public partial class InitializeIdneityDb : Migration
+    public partial class InitializeIdentityDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

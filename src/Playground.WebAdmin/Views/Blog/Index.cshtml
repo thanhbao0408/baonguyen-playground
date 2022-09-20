@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Playground.WebAdmin.Models.Blog
+@model ManageBlogViewModel
+@{
     ViewData["Title"] = "Blog Management";
     Layout = "CoreUI/_LayoutCoreUI";
 }
@@ -16,6 +18,115 @@
                     </button>
                 </div>
             </div>
+            <br />
+            <div>
+                <table id="articles-table" class="stripe" data-article-detail-url="@Url.ActionLink("Details","Blog")">
+                        <thead>
+                            <tr>
+                                <th class="sorting sorting_asc" tabindex="0" rowspan="1" colspan="1"
+                                aria-sort="ascending">State</th>
+                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Slug</th>
+                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Title</th>
+                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Description</th>
+                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Publish Date</th>
+                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Tags</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var article in Model.Articles)
+                            {
+                                var articleTags = "";
+                                if (article.ArticleTags != null)
+                                {
+                                    foreach (var tag in article.ArticleTags)
+                                    {
+                                        articleTags += $"#{tag} ";
+                                    }
+                                }
+                                var state = article.State.ToString();
+
+                            var description = article.Description;
+                            if(description.Length >= 100){
+                                description = description.Substring(0, 100) + "...";
+                            }
+
+                            <tr class="odd">
+                                <td class="sorting_1">@state</td>
+                                <td>@article.Slug</td>
+                                <td>@article.Title</td>
+                                <td>@description</td>
+                                <td>@article.PublishDate?.ToString("MMM/dd/yyyy")</td>
+                                <td>@articleTags</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+            </div>
         </div>
     </div>
 </div>
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+
+    <style>
+        #articles-table td a {
+            text-decoration: none;
+            font-weight: 500;
+            color: black;
+        }
+    </style>
+
+}
+
+    @section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/b-2.2.3/cr-1.5.6/date-1.1.2/r-2.3.0/sb-1.3.4/sp-2.0.2/datatables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const baseDetailUrl = $('#articles-table').data('article-detail-url');
+
+            $('#articles-table').DataTable({
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+                autoWidth: false,
+                columnDefs: [
+                    {
+                        // 
+                        targets: 0,
+                        width: '50px',
+                        render: function (data, type, row) {
+                            switch(data){
+                                case 'Draft':
+                                    return `<span class="badge bg-secondary">Draft</span>`
+                                case 'Archived':
+                                    return `<span class="badge bg-danger">Archived</span>`
+                                case 'Published':
+                                    return `<span class="badge bg-success">Published</span>`
+                            }
+                            return data;
+                            //return data + ' (' + row[3] + ')';
+                        },
+                    }, 
+                    {
+                        target: 1,
+                        visible: false,
+                        searchable: false,
+                    },
+                    {
+                        target: 2, 
+                        render: function (data, type, row) {
+                            return `<a href="${baseDetailUrl}/${row[1]}">${data}</a>`
+                        },
+                    },
+                    { orderable: false, targets: 4 }
+                ],
+            });
+        });
+    </script>
+}

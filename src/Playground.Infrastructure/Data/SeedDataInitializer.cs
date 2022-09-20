@@ -3,6 +3,8 @@ using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Playground.Application.Contracts.Dtos.Blog.Articles;
+using Playground.Core.Entities.Blog.Articles;
 using Playground.Infrastructure.Data.DbContext;
 using Playground.Infrastructure.Identity;
 using Serilog;
@@ -26,25 +28,25 @@ public static class SeedDataInitializer
 
         // TODO: Seed Data
         var userMgr = services.GetRequiredService<UserManager<PlaygroundUser>>();
-        var alice = userMgr.FindByNameAsync("alice").Result;
-        if (alice == null)
+        var testAccount = userMgr.FindByNameAsync("testAccount").Result;
+        if (testAccount == null)
         {
-            alice = new PlaygroundUser
+            testAccount = new PlaygroundUser
             {
-                UserName = "alice",
-                Email = "AliceSmith@email.com",
+                UserName = "testAccount@email.com",
+                Email = "testAccount@email.com",
                 EmailConfirmed = true,
             };
-            var result = userMgr.CreateAsync(alice, "Pass123$").Result;
+            var result = userMgr.CreateAsync(testAccount, "Password123$").Result;
             if (!result.Succeeded)
             {
                 throw new Exception(result.Errors.First().Description);
             }
 
-            result = userMgr.AddClaimsAsync(alice, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Alice"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
+            result = userMgr.AddClaimsAsync(testAccount, new Claim[]{
+                            new Claim(JwtClaimTypes.Name, "Test Test"),
+                            new Claim(JwtClaimTypes.GivenName, "Test"),
+                            new Claim(JwtClaimTypes.FamilyName, "Test"),
                             new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
                         }).Result;
             if (!result.Succeeded)
@@ -58,38 +60,6 @@ public static class SeedDataInitializer
             Log.Debug("alice already exists");
         }
 
-        var bob = userMgr.FindByNameAsync("bob").Result;
-        if (bob == null)
-        {
-            bob = new PlaygroundUser
-            {
-                UserName = "bob",
-                Email = "BobSmith@email.com",
-                EmailConfirmed = true
-            };
-            var result = userMgr.CreateAsync(bob, "Pass123$").Result;
-            if (!result.Succeeded)
-            {
-                throw new Exception(result.Errors.First().Description);
-            }
-
-            result = userMgr.AddClaimsAsync(bob, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Bob Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Bob"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                            new Claim("location", "somewhere")
-                        }).Result;
-            if (!result.Succeeded)
-            {
-                throw new Exception(result.Errors.First().Description);
-            }
-            Log.Debug("bob created");
-        }
-        else
-        {
-            Log.Debug("bob already exists");
-        }
 
         identityContext.SaveChanges();
     }
@@ -102,6 +72,59 @@ public static class SeedDataInitializer
         playgroundContext.Database.Migrate();
 
         // TODO: Seed Data
+        var articles = new List<Article>
+        {
+            new Article(Guid.NewGuid())
+            {
+                State = ArticleState.Draft,
+                Title = "Article 1",
+                Description = "Description 1",
+                Content = "Content 1",
+                Slug = "article-1",
+            },
+            new Article(Guid.NewGuid())
+            {
+                State = ArticleState.Draft,
+                Title = "Article 2",
+                Description = "Description 2",
+                Content = "Content 2",
+                Slug = "article-2",
+            },
+            new Article(Guid.NewGuid())
+            {
+                State = ArticleState.Draft,
+                Title = "Article 3",
+                Description = "Description 3",
+                Content = "Content 3",
+                Slug = "article-33",
+            },
+            new Article(Guid.NewGuid())
+            {
+                State = ArticleState.Draft,
+                Title = "Article 4",
+                Description = "Description 4",
+                Content = "Content 4",
+                Slug = "article-4",
+            },
+            new Article(Guid.NewGuid())
+            {
+                State = ArticleState.Draft,
+                Title = "Article 5",
+                Description = "Description 5",
+                Content = "Content 5",
+                Slug = "article-5",
+            },
+            new Article(Guid.NewGuid())
+            {
+                State = ArticleState.Draft,
+                Title = "Article 6",
+                Description = "Description 6",
+                Content = "Content 6",
+                Slug = "article-6",
+            },
+        };
+
+        playgroundContext.AddRange(articles);
 
         playgroundContext.SaveChanges();
     }

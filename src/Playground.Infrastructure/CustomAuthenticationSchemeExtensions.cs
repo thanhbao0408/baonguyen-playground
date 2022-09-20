@@ -27,7 +27,6 @@ namespace Playground.Infrastructure
             {
                 o.DefaultScheme = IdentityConstants.ApplicationScheme;
                 o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
             })
             .AddCookie(IdentityConstants.ApplicationScheme, o =>
             {

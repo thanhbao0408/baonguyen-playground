@@ -131,8 +131,12 @@ namespace Playground.Infrastructure.Extensions
                 //.RequireAuthorization(PlaygroundConsts.PlaygroundAdministrationPolicy);
 
                 endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name: "default-with-slug",
+                    pattern: "{controller=Home}/{action=Index}/{slug?}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
                 //.RequireAuthorization();
                 endpoints.MapRazorPages();
 

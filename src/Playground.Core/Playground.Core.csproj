@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BN.CleanArchitecture\BN.CleanArchitecture.Core\BN.CleanArchitecture.Core.csproj" />
+    <ProjectReference Include="..\Playground.Application.Contracts\Playground.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
