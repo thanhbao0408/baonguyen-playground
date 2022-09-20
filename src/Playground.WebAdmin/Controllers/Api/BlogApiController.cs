@@ -8,7 +8,7 @@ namespace Playground.WebAdmin.Controllers.Api
 {
 
     [ApiVersion("1.0")]
-    public class BlogApiController : BasePlaygroundApiController
+    public class BlogApiController : BaseApiController
     {
         #region Articles
         /*

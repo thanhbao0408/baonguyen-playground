@@ -1,4 +1,9 @@
-﻿<header class="header header-sticky mb-4">
+﻿@using Microsoft.AspNetCore.Identity
+@using Playground.Infrastructure.Identity
+@inject SignInManager<PlaygroundUser> SignInManager
+@inject UserManager<PlaygroundUser> UserManager
+
+<header class="header header-sticky mb-4">
     <div class="container-fluid">
         <button class="header-toggler px-md-0 me-md-3" type="button"
                 onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
@@ -8,16 +13,30 @@
                 <use xlink:href="assets/brand/coreui.svg#full"></use>
             </svg>
         </a>
-    </div>
-    @*<div class="header-divider"></div>
-    <div class="container-fluid">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">
-                    <!-- if breadcrumb is single--><span>Home</span>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <ul class="header-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-regular fa-user"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end pt-0">
+                        <a class="dropdown-item text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                            <i class="icon me-2 fa-solid fa-gear"></i> Manage Account
+                        </a>
+                        <form class="dropdown-item" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="nav-link btn btn-link text-dark">
+                                <i class="icon me-2 fa-solid fa-right-from-bracket"></i> Logout
+                            </button>
+                        </form>
+                    </div>
                 </li>
-                <li class="breadcrumb-item active"><span>Dashboard</span></li>
-            </ol>
-        </nav>
-    </div>*@
+            </ul>
+            @*<span class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
+            </span>*@
+        }
+    </div>
 </header>

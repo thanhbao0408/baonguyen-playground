@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace BN.CleanArchitecture.Infrastructure.Controllers;
 
 [ApiController]
-public class BaseApiController : Controller
+public class BaseController : Controller
 {
     private ISender _mediator;
     protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();

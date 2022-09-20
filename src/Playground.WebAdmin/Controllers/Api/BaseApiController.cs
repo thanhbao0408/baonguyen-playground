@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Playground.WebAdmin.Controllers.Api
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class BasePlaygroundApiController : BaseApiController
+    public class BaseApiController : BN.CleanArchitecture.Infrastructure.Controllers.BaseController
     {
     }
 }
