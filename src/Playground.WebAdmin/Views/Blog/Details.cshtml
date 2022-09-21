@@ -52,17 +52,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-6">
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="article-content" rows="10" style="resize: none; height: 15rem"></textarea>
                                 <label for="article-content">Content</label>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-6">
                             <div class="form-floating mb-3">
                                 <div class="card bg-light">
-                                    <div class="card-body">
-                                        <h1>HELLO?</h1>
+                                    <div id="article-md-review" class="card-body">
+                                        Preview
                                     </div>
                                 </div>
                             </div>
@@ -116,12 +116,41 @@
     </div>
 </div>
 
+@section Styles{
+    <style>
+        #article-md-review img {
+            max-width: 100%;
+        }
+
+        #article-md-review pre {
+            background: #c8d2dc;
+            padding: 8px;
+        }
+
+
+    </style>
+}
+
 @section Scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <script>
-        $(document).ready(() =>{
+        $(document).ready(() => {
             $('#article-tags').select2({
                 multiple: true
             });
+
+            if ($("#article-content").text()) {
+                document.getElementById('article-md-review').innerHTML =
+                    marked.parse(e.currentTarget.value);
+            }
+
+            $("#article-content").on("keyup", (e) => {
+                document.getElementById('article-md-review').innerHTML =
+                    marked.parse(e.currentTarget.value);
+            });
+
         });
     </script>
     }
