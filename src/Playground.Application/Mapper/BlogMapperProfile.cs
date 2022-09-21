@@ -8,7 +8,14 @@ namespace Blog.Contracts.Mapper
     {
         public BlogMapperProfile()
         {
-            CreateMap<Article, ArticleDto>().ReverseMap();
+            CreateMap<Article, ArticleDto>()
+                .ForMember(dest => dest.ArticleTags, opt => opt.MapFrom(src => src.ArticleTags.Select(t => t.Tag.Name)))
+                .ReverseMap();
+
+            CreateMap<Article, ArticleDetailDto>()
+                .ForMember(des => des.ArticleTags, opt => opt.MapFrom(src => src.ArticleTags.Select(p => p.Tag)))
+                .ReverseMap();
+
         }
     }
 }

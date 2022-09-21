@@ -5,19 +5,123 @@
     Layout = "CoreUI/_LayoutCoreUI";
 
     var isCreateNewArticle = Model == null;
-    if(isCreateNewArticle){
+    if (isCreateNewArticle)
+    {
         ViewData["Title"] = "Create new article";
     }
-    else {
+    else
+    {
         ViewData["Title"] = Model.Title;
     }
 }
 
-@if(isCreateNewArticle)
-{
-    <h1>Create new article</h1>
-}
-else 
-{
-    <h1>Modify Article @Model.Title</h1>
-}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="article-title" class="form-control" placeholder="Title" aria-label="Title">
+                                <label for="article-title">Title</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="form-floating" style="flex: 1">
+                                    <input type="text" id="article-slug" class="form-control" placeholder="Slug" aria-label="Slug">
+                                    <label for="article-slug">Slug</label>
+                                </div>
+                                <button type="button" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="article-description" rows="5" style="resize: none; height: 7.5rem"></textarea>
+                                <label for="article-description">Description</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <input type="text" id="article-cover-image" class="form-control" placeholder="Cover Image Url" aria-label="Cover Image">
+                                <label for="article-cover-image">Cover Image URL</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="article-content" rows="10" style="resize: none; height: 15rem"></textarea>
+                                <label for="article-content">Content</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h1>HELLO?</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="mb-3">
+                @if (isCreateNewArticle)
+                {
+                    <button type="button" class="btn btn-primary" style="width:100%">Create</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-warning" style="width:100%">Save</button>
+                }
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label">State</label>
+                            <select class="form-select" id="article-state">
+                                <option value="-1">Archived</option>
+                                <option value="0" selected>Draft</option>
+                                <option value="1">Published</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label" for="article-published-date">Published Date</label>
+                            <input type="date" id="article-published-date" class="form-control" name="article-published-date">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label class="form-label" for="article-tags">Tags</label>
+                            <select class="form-select" id="article-tags">
+                                <option value="-1">Tag 1</option>
+                                <option value="0" selected>Tag 2</option>
+                                <option value="1">Tag 3</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(() =>{
+            $('#article-tags').select2({
+                multiple: true
+            });
+        });
+    </script>
+    }
