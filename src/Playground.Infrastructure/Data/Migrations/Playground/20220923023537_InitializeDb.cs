@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Playground.Infrastructure.Data.Migrations
+namespace Playground.Infrastructure.Data.Migrations.Playground
 {
-    public partial class AddArticleEntity : Migration
+    public partial class InitializeDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,16 +32,27 @@ namespace Playground.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "blog_tag",
+                name: "tag_color",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    bg_color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    border_color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    text_color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_tag_color", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tag",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    blog_tag_color_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    blog_tag_bg_color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    blog_tag_border_color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    blog_tag_text_color = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    color_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     last_modified = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -49,7 +60,13 @@ namespace Playground.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_blog_tag", x => x.id);
+                    table.PrimaryKey("pk_tag", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_tag_tag_color_color_id",
+                        column: x => x.color_id,
+                        principalTable: "tag_color",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -73,9 +90,9 @@ namespace Playground.Infrastructure.Data.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_article_tag_blog_tag_tag_id",
+                        name: "fk_article_tag_tag_tag_id",
                         column: x => x.tag_id,
-                        principalTable: "blog_tag",
+                        principalTable: "tag",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -90,6 +107,11 @@ namespace Playground.Infrastructure.Data.Migrations
                 table: "articles",
                 column: "slug",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_tag_color_id",
+                table: "tag",
+                column: "color_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -101,7 +123,10 @@ namespace Playground.Infrastructure.Data.Migrations
                 name: "articles");
 
             migrationBuilder.DropTable(
-                name: "blog_tag");
+                name: "tag");
+
+            migrationBuilder.DropTable(
+                name: "tag_color");
         }
     }
 }

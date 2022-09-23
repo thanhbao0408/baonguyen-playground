@@ -15,7 +15,7 @@ namespace Playground.Core.Entities.Blog.Articles
 
         public Guid TagId { get; set; }
 
-        public BlogTag Tag { get; set; }
+        public Tag Tag { get; set; }
 
     }
 }

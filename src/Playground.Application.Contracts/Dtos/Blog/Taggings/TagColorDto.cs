@@ -1,6 +1,6 @@
 ﻿using BN.CleanArchitecture.Contracts.Dtos;
 
-namespace Playground.Application.Contracts.Dtos.Blog.Tags
+namespace Playground.Application.Contracts.Dtos.Blog.Taggings
 {
     public class TagColorDto: EntityDto<Guid>
     {

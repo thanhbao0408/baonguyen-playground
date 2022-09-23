@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Playground.Application.Contracts.Dtos.Blog.Articles;
+using Playground.Application.Contracts.Dtos.Blog.Taggings;
 using Playground.Core.Entities.Blog.Articles;
+using Playground.Core.Entities.Taggings;
 
 namespace Blog.Contracts.Mapper
 {
@@ -15,6 +17,8 @@ namespace Blog.Contracts.Mapper
             CreateMap<Article, ArticleDetailDto>()
                 .ForMember(des => des.ArticleTags, opt => opt.MapFrom(src => src.ArticleTags.Select(p => p.Tag)))
                 .ReverseMap();
+
+            CreateMap<Tag, TagDto>().ReverseMap();
 
         }
     }

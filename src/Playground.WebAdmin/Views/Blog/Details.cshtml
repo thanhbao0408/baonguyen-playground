@@ -1,68 +1,71 @@
-﻿@using Playground.Application.Contracts.Dtos.Blog.Articles
-@model ArticleDetailDto
+﻿@using Playground.WebAdmin.Models.Blog
+@model ArticleDetailVM
 
 @{
     Layout = "CoreUI/_LayoutCoreUI";
 
-    var isCreateNewArticle = Model == null;
+    var isCreateNewArticle = Model.ArticleDetail.Id == Guid.Empty;
     if (isCreateNewArticle)
     {
         ViewData["Title"] = "Create new article";
     }
     else
     {
-        ViewData["Title"] = Model.Title;
+        ViewData["Title"] = Model.ArticleDetail.Title;
     }
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-9">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" id="article-title" class="form-control" placeholder="Title" aria-label="Title">
-                                <label for="article-title">Title</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="input-group mb-3">
-                                <div class="form-floating" style="flex: 1">
-                                    <input type="text" id="article-slug" class="form-control" placeholder="Slug" aria-label="Slug">
-                                    <label for="article-slug">Slug</label>
+<form asp-controller="Blog" asp-action="Modify" method="post">
+    <input asp-for="ArticleDetail.Id" type="hidden" />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ArticleDetail.Title" type="text" id="article-title" class="form-control" placeholder="Title" aria-label="Title">
+                                    <label for="article-title">Title</label>
                                 </div>
-                                <button type="button" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i></button>
+                            </div>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="form-floating" style="flex: 1">
+                                        <input asp-for="ArticleDetail.Slug" type="text" id="article-slug" class="form-control" placeholder="Slug" aria-label="Slug">
+                                        <label for="article-slug">Slug</label>
+                                    </div>
+                                    <button type="button" id="btn-slug-generate" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="article-description" rows="5" style="resize: none; height: 7.5rem"></textarea>
-                                <label for="article-description">Description</label>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <textarea asp-for="ArticleDetail.Description" class="form-control" id="article-description" rows="5" style="resize: none; height: 7.5rem"></textarea>
+                                    <label for="article-description">Description</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ArticleDetail.CoverImage" type="text" id="article-cover-image" class="form-control" placeholder="Cover Image Url" aria-label="Cover Image">
+                                    <label for="article-cover-image">Cover Image URL</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <input type="text" id="article-cover-image" class="form-control" placeholder="Cover Image Url" aria-label="Cover Image">
-                                <label for="article-cover-image">Cover Image URL</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <textarea asp-for="ArticleDetail.Content" class="form-control" id="article-content" rows="10" style="resize: none; height: 15rem"></textarea>
+                                    <label for="article-content">Content</label>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="article-content" rows="10" style="resize: none; height: 15rem"></textarea>
-                                <label for="article-content">Content</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-floating mb-3">
-                                <div class="card bg-light">
-                                    <div id="article-md-review" class="card-body">
-                                        Preview
+                            <div class="col-6">
+                                <div class="form-floating mb-3">
+                                    <div class="card bg-light">
+                                        <div id="article-md-review" class="card-body">
+                                            Preview
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -70,51 +73,52 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-3">
-            <div class="mb-3">
-                @if (isCreateNewArticle)
-                {
-                    <button type="button" class="btn btn-primary" style="width:100%">Create</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-warning" style="width:100%">Save</button>
-                }
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label class="form-label">State</label>
-                            <select class="form-select" id="article-state">
-                                <option value="-1">Archived</option>
-                                <option value="0" selected>Draft</option>
-                                <option value="1">Published</option>
-                            </select>
+            <div class="col-3">
+                <div class="mb-3">
+                    @if (isCreateNewArticle)
+                    {
+                        <button type="submit" class="btn btn-primary" style="width:100%">Create</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-warning" style="width:100%">Save</button>
+                    }
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label class="form-label">State</label>
+                                <select asp-for="ArticleDetail.State" class="form-select" id="article-state">
+                                    <option value="-1">Archived</option>
+                                    <option value="0" selected>Draft</option>
+                                    <option value="1">Published</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label class="form-label" for="article-published-date">Published Date</label>
-                            <input type="date" id="article-published-date" class="form-control" name="article-published-date">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label class="form-label" for="article-published-date">Published Date</label>
+                                <input asp-for="ArticleDetail.PublishDate" type="date" id="article-published-date" class="form-control" name="article-published-date">
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label class="form-label" for="article-tags">Tags</label>
-                            <select class="form-select" id="article-tags">
-                                <option value="-1">Tag 1</option>
-                                <option value="0" selected>Tag 2</option>
-                                <option value="1">Tag 3</option>
-                            </select>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label class="form-label" for="article-tags">Tags</label>
+                                <select asp-for="ArticleTagIds" class="form-select" id="article-tags">
+                                    @foreach (var tag in Model.Tags)
+                                    {
+                                        <option value="@tag.Id">@tag.Name</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 @section Styles{
     <style>
@@ -127,11 +131,10 @@
             padding: 8px;
         }
 
-
     </style>
 }
 
-@section Scripts{
+    @section Scripts{
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -141,9 +144,9 @@
                 multiple: true
             });
 
-            if ($("#article-content").text()) {
+            if ($("#article-content").val()) {
                 document.getElementById('article-md-review').innerHTML =
-                    marked.parse(e.currentTarget.value);
+                    marked.parse($("#article-content").val());
             }
 
             $("#article-content").on("keyup", (e) => {

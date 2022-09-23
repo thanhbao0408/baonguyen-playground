@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Playground.Infrastructure.Data.DbContext;
 
 #nullable disable
 
-namespace Playground.Infrastructure.Data.Migrations
+namespace Playground.Infrastructure.Data.Migrations.Playground
 {
     [DbContext(typeof(PlaygroundDbContext))]
-    partial class PlaygroundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220923023537_InitializeDb")]
+    partial class InitializeDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,35 +126,16 @@ namespace Playground.Infrastructure.Data.Migrations
                     b.ToTable("article_tag", (string)null);
                 });
 
-            modelBuilder.Entity("Playground.Core.Entities.Taggings.BlogTag", b =>
+            modelBuilder.Entity("Playground.Core.Entities.Taggings.Tag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
-                    b.Property<string>("BlogTagBgColor")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("blog_tag_bg_color");
-
-                    b.Property<string>("BlogTagBorderColor")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("blog_tag_border_color");
-
-                    b.Property<string>("BlogTagColorName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("blog_tag_color_name");
-
-                    b.Property<string>("BlogTagTextColor")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("blog_tag_text_color");
+                    b.Property<Guid>("ColorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("color_id");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2")
@@ -161,12 +144,6 @@ namespace Playground.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("created_by");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasColumnName("description");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2")
@@ -183,9 +160,48 @@ namespace Playground.Infrastructure.Data.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_blog_tag");
+                        .HasName("pk_tag");
 
-                    b.ToTable("blog_tag", (string)null);
+                    b.HasIndex("ColorId")
+                        .HasDatabaseName("ix_tag_color_id");
+
+                    b.ToTable("tag", (string)null);
+                });
+
+            modelBuilder.Entity("Playground.Core.Entities.Taggings.TagColor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<string>("BgColor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("bg_color");
+
+                    b.Property<string>("BorderColor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("border_color");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("TextColor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("text_color");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tag_color");
+
+                    b.ToTable("tag_color", (string)null);
                 });
 
             modelBuilder.Entity("Playground.Core.Entities.Blog.Articles.ArticleTag", b =>
@@ -197,14 +213,26 @@ namespace Playground.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_article_tag_articles_article_id");
 
-                    b.HasOne("Playground.Core.Entities.Taggings.BlogTag", "Tag")
+                    b.HasOne("Playground.Core.Entities.Taggings.Tag", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_article_tag_blog_tag_tag_id");
+                        .HasConstraintName("fk_article_tag_tag_tag_id");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("Playground.Core.Entities.Taggings.Tag", b =>
+                {
+                    b.HasOne("Playground.Core.Entities.Taggings.TagColor", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_tag_tag_color_color_id");
+
+                    b.Navigation("Color");
                 });
 
             modelBuilder.Entity("Playground.Core.Entities.Blog.Articles.Article", b =>

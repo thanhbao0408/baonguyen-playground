@@ -1,11 +1,20 @@
 ﻿using BN.CleanArchitecture.Contracts.Dtos;
-using Playground.Application.Contracts.Dtos.Blog.Tags;
+using Playground.Application.Contracts.Dtos.Blog.Taggings;
 using System.Collections.ObjectModel;
 
 namespace Playground.Application.Contracts.Dtos.Blog.Articles
 {
     public class ArticleDetailDto : EntityDto<Guid>
     {
+        public ArticleDetailDto()
+        {
+
+        }
+        public ArticleDetailDto(Guid id) : base(id)
+        {
+
+        }
+
         public ArticleState State { get; set; }
 
         public string Title { get; set; }

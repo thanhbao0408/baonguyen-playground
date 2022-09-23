@@ -24,12 +24,30 @@ namespace Playground.WebAdmin.Controllers
 
         public async Task<IActionResult> Details(string slug)
         {
-            ArticleDetailDto articleDetails = null;
+            ArticleDetailDto articleDetail = null;
             if (!string.IsNullOrWhiteSpace(slug))
             {
-                articleDetails = (await Mediator.Send(new GetArticleDetailBySlugQuery(slug))).Data;
+                articleDetail = (await Mediator.Send(new GetArticleDetailBySlugQuery(slug))).Data;
             }
-            return View(articleDetails);
+
+            if(articleDetail == null)
+            {
+                articleDetail = new ArticleDetailDto(Guid.Empty);
+            };
+
+            var articleDetailVM = new ArticleDetailVM
+            {
+                ArticleDetail = articleDetail
+            };
+
+            var query = new GetTagsQuery
+            {
+                IsPagingEnabled = false,
+            };
+            var tagsResultModel = await Mediator.Send(query);
+            articleDetailVM.Tags = tagsResultModel.Data.Items;
+
+            return View(articleDetailVM);
         }
     }
 }

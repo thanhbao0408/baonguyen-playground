@@ -9,7 +9,6 @@
 	<ItemGroup>
 		<Folder Include="Methods\Commands\" />
 		<Folder Include="Methods\Commands\" />
-		<Folder Include="Specs\" />
 	</ItemGroup>
 
 	<ItemGroup>

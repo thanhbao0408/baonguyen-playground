@@ -1,10 +1,12 @@
 
 using IdentityModel;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Playground.Application.Contracts.Dtos.Blog.Articles;
 using Playground.Core.Entities.Blog.Articles;
+using Playground.Core.Entities.Taggings;
 using Playground.Infrastructure.Data.DbContext;
 using Playground.Infrastructure.Identity;
 using Serilog;
@@ -25,6 +27,11 @@ public static class SeedDataInitializer
         var identityContext = services.GetRequiredService<PlaygroundIdentityDbContext>();
 
         identityContext.Database.Migrate();
+
+        if (identityContext.Users.Any())
+        {
+            return;
+        }
 
         // TODO: Seed Data
         var userMgr = services.GetRequiredService<UserManager<PlaygroundUser>>();
@@ -71,7 +78,98 @@ public static class SeedDataInitializer
 
         playgroundContext.Database.Migrate();
 
-        // TODO: Seed Data
+        if (playgroundContext.Articles.Any())
+        {
+            return;
+        }
+
+        var tagColors = new List<TagColor>
+        {
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "green",
+                TextColor = "#402c1b",
+                BgColor = "#fdecc8",
+                BorderColor = "#402c1b",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "yellow",
+                TextColor = "#1c3829",
+                BgColor = "#dbeddb",
+                BorderColor = "#1c3829",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "light gray",
+                TextColor = "#32302c",
+                BgColor = "#e3e2e080",
+                BorderColor = "#32302c",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "blue",
+                TextColor = "#183347",
+                BgColor = "#d3e5ef",
+                BorderColor = "#183347",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "pink",
+                TextColor = "#4c2337",
+                BgColor = "#f5e0e9",
+                BorderColor = "#4c2337",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "gray",
+                TextColor = "#32302c",
+                BgColor = "#e3e2e0",
+                BorderColor = "#32302c",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "brown",
+                TextColor = "#442a1e",
+                BgColor = "#eee0da",
+                BorderColor = "#442a1e",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "orange",
+                TextColor = "#49290e",
+                BgColor = "#fadec9",
+                BorderColor = "#49290e",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "red",
+                TextColor = "#5d1715",
+                BgColor = "#ffe2dd",
+                BorderColor = "#5d1715",
+            },
+            new TagColor(Guid.NewGuid())
+            {
+                Name = "purple",
+                TextColor = "#412454",
+                BgColor = "#e8deee",
+                BorderColor = "#412454",
+            },
+        };
+
+        playgroundContext.AddRange(tagColors);
+
+        var tags = new List<Tag>
+        {
+            new Tag(Guid.NewGuid())
+            {
+                Name = "ASP.NET",
+                Color = tagColors[9],
+            }
+        };
+
+        playgroundContext.AddRange(tags);
+
         var articles = new List<Article>
         {
             new Article(Guid.NewGuid())
