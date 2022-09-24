@@ -88,5 +88,21 @@ namespace Playground.WebAdmin.Controllers
                 return Details(articleDetailVM);
             }
         }
+
+        public async Task<IActionResult> GetSuggestionSlug(string title, Guid? articleId)
+        {
+            var slug = title.ToLower().Replace(" ", "-");
+            if(slug.Length >= 95)
+            {
+                slug = slug.Substring(0, 95);
+            }
+            var index = 0;
+            while (!(await Mediator.Send(new CheckSlugAvailableQuery(slug, articleId))).Data)
+            {
+                index++;
+                slug = slug + $"-{index}";
+            }
+            return Ok(slug);
+        }
     }
 }

@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Playground.Application.Contracts.Dtos.Blog.Articles;
 using Playground.Core.Entities.Blog.Articles;
+using System.Text.RegularExpressions;
 
 namespace Playground.Application.Methods.Commands.Articles.CreateArticle
 {
@@ -21,6 +22,10 @@ namespace Playground.Application.Methods.Commands.Articles.CreateArticle
                 RuleFor(v => v.Model.Slug)
                     .NotEmpty().WithMessage("Slug is required")
                     .MaximumLength(100).WithMessage("Slug must not exceed 100 characters")
+                    .Must(slug =>
+                    {
+                        return Regex.IsMatch(slug, @"^[a-zA-Z0-9-]+$");
+                    })
                     .MustAsync(async (slug, cancellation) =>
                     {
                         var isDuplicated = await _articleRepo.AnyAsync(article => EF.Functions.Like(article.Slug, slug));

@@ -15,9 +15,8 @@
     }
 }
 
-
 <form asp-controller="Blog" asp-action="Modify" method="post">
-    <input asp-for="ArticleDetail.Id" type="hidden" />
+    <input asp-for="ArticleDetail.Id" type="hidden" id="article-id" />
     <div class="container-fluid">
         <a class="btn btn-primary mb-3" href="@Url.ActionLink("Index","Blog")" role="button">
             <i class="fa-solid fa-arrow-left icon me-2"></i></i>Back
@@ -36,7 +35,7 @@
                             <div class="col">
                                 <div class="input-group mb-3">
                                     <div class="form-floating" style="flex: 1">
-                                        <input asp-for="ArticleDetail.Slug" type="text" id="article-slug" class="form-control" placeholder="Slug" aria-label="Slug">
+                                        <input asp-for="ArticleDetail.Slug" type="text" id="article-slug" class="form-control" placeholder="Slug" aria-label="Slug" disabled>
                                         <label for="article-slug">Slug</label>
                                     </div>
                                     <button type="button" id="btn-slug-generate" class="btn btn-primary"><i class="fa-solid fa-rotate-left"></i></button>
@@ -161,6 +160,23 @@
                     marked.parse(e.currentTarget.value);
             });
 
+            $('#btn-slug-generate').on("click", (e) => {
+                getSuggestSlug();
+            });
+            
+            $('#article-title').on('blur', () => {
+                getSuggestSlug();
+            });
+
+            async function getSuggestSlug()
+            {
+                const title = $("#article-title").val();
+                var suggestSlug = await $.get('@Url.ActionLink("GetSuggestionSlug","Blog")', {
+                    title,
+                    articleId: $("#article-id").val()
+                });
+                $('#article-slug').val(suggestSlug);
+            }
         });
     </script>
     }

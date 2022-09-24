@@ -33,42 +33,44 @@ public static class SeedDataInitializer
             return;
         }
 
-        // TODO: Seed Data
-        var userMgr = services.GetRequiredService<UserManager<PlaygroundUser>>();
-        var testAccount = userMgr.FindByNameAsync("testAccount").Result;
-        if (testAccount == null)
-        {
-            testAccount = new PlaygroundUser
-            {
-                UserName = "testAccount@email.com",
-                Email = "testAccount@email.com",
-                EmailConfirmed = true,
-            };
-            var result = userMgr.CreateAsync(testAccount, "Password123$").Result;
-            if (!result.Succeeded)
-            {
-                throw new Exception(result.Errors.First().Description);
-            }
+        return;
 
-            result = userMgr.AddClaimsAsync(testAccount, new Claim[]{
-                            new Claim(JwtClaimTypes.Name, "Test Test"),
-                            new Claim(JwtClaimTypes.GivenName, "Test"),
-                            new Claim(JwtClaimTypes.FamilyName, "Test"),
-                            new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
-                        }).Result;
-            if (!result.Succeeded)
-            {
-                throw new Exception(result.Errors.First().Description);
-            }
-            Log.Debug("alice created");
-        }
-        else
-        {
-            Log.Debug("alice already exists");
-        }
+        //// TODO: Seed Data
+        //var userMgr = services.GetRequiredService<UserManager<PlaygroundUser>>();
+        //var testAccount = userMgr.FindByNameAsync("testAccount").Result;
+        //if (testAccount == null)
+        //{
+        //    testAccount = new PlaygroundUser
+        //    {
+        //        UserName = "testAccount@email.com",
+        //        Email = "testAccount@email.com",
+        //        EmailConfirmed = true,
+        //    };
+        //    var result = userMgr.CreateAsync(testAccount, "Password123$").Result;
+        //    if (!result.Succeeded)
+        //    {
+        //        throw new Exception(result.Errors.First().Description);
+        //    }
+
+        //    result = userMgr.AddClaimsAsync(testAccount, new Claim[]{
+        //                    new Claim(JwtClaimTypes.Name, "Test Test"),
+        //                    new Claim(JwtClaimTypes.GivenName, "Test"),
+        //                    new Claim(JwtClaimTypes.FamilyName, "Test"),
+        //                    new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
+        //                }).Result;
+        //    if (!result.Succeeded)
+        //    {
+        //        throw new Exception(result.Errors.First().Description);
+        //    }
+        //    Log.Debug("alice created");
+        //}
+        //else
+        //{
+        //    Log.Debug("alice already exists");
+        //}
 
 
-        identityContext.SaveChanges();
+        //identityContext.SaveChanges();
     }
 
 
