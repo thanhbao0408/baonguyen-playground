@@ -19,7 +19,7 @@ namespace Playground.Infrastructure.Data.Migrations.Playground
                     description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     cover_image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    slug = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    slug = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     publish_date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     created_by = table.Column<string>(type: "nvarchar(max)", nullable: true),

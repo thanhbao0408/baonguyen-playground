@@ -7,16 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Methods\Commands\" />
-		<Folder Include="Methods\Commands\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
 		<PackageReference Include="FluentValidation" Version="11.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\BN.CleanArchitecture\BN.Common\BN.Common.csproj" />
 		<ProjectReference Include="..\Playground.Application.Contracts\Playground.Application.Contracts.csproj" />
 		<ProjectReference Include="..\Playground.Core\Playground.Core.csproj" />
 	</ItemGroup>

@@ -12,7 +12,7 @@ namespace BN.CleanArchitecture.Contracts.Dtos
 
     public class EntityDto<TKey>: EntityDto
     {
-        public virtual TKey Id { get; protected set; }
+        public virtual TKey Id { get; set; }
 
         protected EntityDto() { }
 

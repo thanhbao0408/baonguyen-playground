@@ -15,9 +15,13 @@
     }
 }
 
+
 <form asp-controller="Blog" asp-action="Modify" method="post">
     <input asp-for="ArticleDetail.Id" type="hidden" />
     <div class="container-fluid">
+        <a class="btn btn-primary mb-3" href="@Url.ActionLink("Index","Blog")" role="button">
+            <i class="fa-solid fa-arrow-left icon me-2"></i></i>Back
+        </a>
         <div class="row">
             <div class="col-9">
                 <div class="card">
@@ -105,12 +109,15 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label class="form-label" for="article-tags">Tags</label>
-                                <select asp-for="ArticleTagIds" class="form-select" id="article-tags">
-                                    @foreach (var tag in Model.Tags)
-                                    {
-                                        <option value="@tag.Id">@tag.Name</option>
-                                    }
-                                </select>
+                                @if (Model.Tags != null)
+                                {
+                                    <select asp-for="ArticleTagIds" class="form-select" id="article-tags">
+                                        @foreach (var tag in Model.Tags)
+                                        {
+                                            <option value="@tag.Id">@tag.Name</option>
+                                        }
+                                    </select>
+                                }
                             </div>
                         </div>
                     </div>

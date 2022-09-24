@@ -61,16 +61,30 @@ public class RepositoryBase<TDbContext, TEntity, TKey> : IRepository<TEntity, TK
     {
         await _dbContext.Set<TEntity>().AddAsync(entity);
 
-        // await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
 
         return entity;
     }
 
-    public async Task RemoveAsync(TEntity entity)
+    public async Task<TEntity> UpdateAsync(TEntity entity)
+    {
+        _dbContext.Set<TEntity>().Update(entity);
+
+        await _dbContext.SaveChangesAsync();
+
+        return entity;
+    }
+
+   public async Task RemoveAsync(TEntity entity)
     {
         _dbContext.Set<TEntity>().Remove(entity);
 
-        // await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return await _dbContext.Set<TEntity>().AnyAsync(predicate);
     }
 
     private static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery,

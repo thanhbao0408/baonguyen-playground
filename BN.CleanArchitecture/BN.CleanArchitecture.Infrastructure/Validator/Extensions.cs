@@ -14,13 +14,14 @@ public static class Extensions
     /// <summary>
     /// Ref https://www.jerriepelser.com/blog/validation-response-aspnet-core-webapi
     /// </summary>
-    public static async Task HandleValidation<TRequest>(this IValidator<TRequest> validator, TRequest request)
+    public static async Task<ValidationResult> HandleValidation<TRequest>(this IValidator<TRequest> validator, TRequest request)
     {
         ValidationResult? validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult.ToValidationResultModel());
         }
+        return validationResult;
     }
 
     public static IServiceCollection AddCustomValidators(this IServiceCollection services, Type[] types)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Playground.Application.Contracts.Dtos.Blog.Articles;
+using Playground.Application.Methods.Commands.Articles.CreateArticle;
 using Playground.Application.Methods.Queries;
 using Playground.WebAdmin.Models.Blog;
 
@@ -47,7 +48,45 @@ namespace Playground.WebAdmin.Controllers
             var tagsResultModel = await Mediator.Send(query);
             articleDetailVM.Tags = tagsResultModel.Data.Items;
 
-            return View(articleDetailVM);
+            return Details(articleDetailVM);
+        }
+
+        private IActionResult Details(ArticleDetailVM articleVM)
+        {
+            return View("Details", articleVM);
+        }
+
+        public async Task<IActionResult> Modify(ArticleDetailVM articleDetailVM)
+        {
+            try
+            {
+                ArticleDetailDto articleDto;
+                // Sucess, stay on this page;
+                if (articleDetailVM.ArticleDetail.Id == Guid.Empty)
+                {
+                    // create new
+                    var createArticleCommand = new CreateArticleCommand
+                    {
+                        Model = articleDetailVM.ArticleDetail
+                    };
+                    articleDto = (await Mediator.Send(createArticleCommand)).Data;
+                }
+                else
+                {
+                    // update
+                    var updateArticleCommand = new UpdateArticleCommand
+                    {
+                        Model = articleDetailVM.ArticleDetail
+                    };
+                    articleDto = (await Mediator.Send(updateArticleCommand)).Data;
+                }
+                //return await this.Details(articleDetailVM.ArticleDetail.Slug);
+                return RedirectToAction("Details", new { slug = articleDetailVM.ArticleDetail.Slug });
+            }
+            catch(Exception ex)
+            {
+                return Details(articleDetailVM);
+            }
         }
     }
 }

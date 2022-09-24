@@ -21,7 +21,6 @@ builder.Services
     .AddCoreServices(builder.Configuration, builder.Environment, typeof(ApiAnchor))
     .AddCustomAuthentication(builder.Configuration);
 
-
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

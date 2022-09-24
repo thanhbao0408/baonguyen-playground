@@ -27,7 +27,7 @@ namespace Playground.Core.Entities.Blog.Articles
 
         public string? CoverImage { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         [Required]
         public string Slug { get; set; }
 

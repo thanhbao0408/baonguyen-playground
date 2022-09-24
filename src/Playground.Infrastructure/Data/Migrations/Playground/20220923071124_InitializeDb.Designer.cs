@@ -12,7 +12,7 @@ using Playground.Infrastructure.Data.DbContext;
 namespace Playground.Infrastructure.Data.Migrations.Playground
 {
     [DbContext(typeof(PlaygroundDbContext))]
-    [Migration("20220923023537_InitializeDb")]
+    [Migration("20220923071124_InitializeDb")]
     partial class InitializeDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,8 +67,8 @@ namespace Playground.Infrastructure.Data.Migrations.Playground
 
                     b.Property<string>("Slug")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("slug");
 
                     b.Property<int>("State")

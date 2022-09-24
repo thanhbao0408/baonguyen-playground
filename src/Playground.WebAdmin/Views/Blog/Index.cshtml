@@ -13,40 +13,41 @@
                     <h4 class="card-title mb-0">Blog Management</h4>
                 </div>
                 <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fa-solid fa-plus icon me-2"></i> Add Article
-                    </button>
+                    <a class="btn btn-primary" href="@Url.ActionLink("Details","Blog")" role="button">
+                        <i class="fa-solid fa-plus icon me-2"></i>Add Article
+                    </a>
                 </div>
             </div>
             <br />
             <div>
                 <table id="articles-table" class="stripe" data-article-detail-url="@Url.ActionLink("Details","Blog")">
-                        <thead>
-                            <tr>
-                                <th class="sorting sorting_asc" tabindex="0" rowspan="1" colspan="1"
+                    <thead>
+                        <tr>
+                            <th class="sorting sorting_asc" tabindex="0" rowspan="1" colspan="1"
                                 aria-sort="ascending">State</th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Slug</th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Title</th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Description</th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Publish Date</th>
-                                <th class="sorting" tabindex="0" rowspan="1" colspan="1">Tags</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var article in Model.Articles)
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Slug</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Title</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Description</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Publish Date</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var article in Model.Articles)
+                        {
+                            var articleTags = "";
+                            if (article.ArticleTags != null)
                             {
-                                var articleTags = "";
-                                if (article.ArticleTags != null)
+                                foreach (var tag in article.ArticleTags)
                                 {
-                                    foreach (var tag in article.ArticleTags)
-                                    {
-                                        articleTags += $"#{tag} ";
-                                    }
+                                    articleTags += $"#{tag} ";
                                 }
-                                var state = article.State.ToString();
+                            }
+                            var state = article.State.ToString();
 
                             var description = article.Description;
-                            if(description.Length >= 100){
+                            if (description.Length >= 100)
+                            {
                                 description = description.Substring(0, 100) + "...";
                             }
 
@@ -58,9 +59,9 @@
                                 <td>@article.PublishDate?.ToString("MMM/dd/yyyy")</td>
                                 <td>@articleTags</td>
                             </tr>
-                            }
-                        </tbody>
-                    </table>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -97,11 +98,11 @@
                 autoWidth: false,
                 columnDefs: [
                     {
-                        // 
+                        //
                         targets: 0,
                         width: '50px',
                         render: function (data, type, row) {
-                            switch(data){
+                            switch (data) {
                                 case 'Draft':
                                     return `<span class="badge bg-secondary">Draft</span>`
                                 case 'Archived':
@@ -112,14 +113,14 @@
                             return data;
                             //return data + ' (' + row[3] + ')';
                         },
-                    }, 
+                    },
                     {
                         target: 1,
                         visible: false,
                         searchable: false,
                     },
                     {
-                        target: 2, 
+                        target: 2,
                         render: function (data, type, row) {
                             return `<a href="${baseDetailUrl}/${row[1]}">${data}</a>`
                         },
