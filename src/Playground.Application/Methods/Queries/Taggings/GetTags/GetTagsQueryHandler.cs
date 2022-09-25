@@ -29,13 +29,13 @@ namespace Playground.Application.Methods.Queries
 
             var spec = new TagListQuerySpec<TagDto>(request);
 
-            var articles = await _tagRepository.FindAsync(spec);
+            var tags = await _tagRepository.FindAsync(spec);
 
-            var tagDtos = _mapper.Map<List<TagDto>>(articles);
+            var tagDtos = _mapper.Map<List<TagDto>>(tags);
 
-            var totalArticles = await _tagRepository.CountAsync(spec);
+            var totalTags = await _tagRepository.CountAsync(spec);
 
-            var resultModel = ListResultModel<TagDto>.Create(tagDtos,totalArticles,request.Page,request.PageSize);
+            var resultModel = ListResultModel<TagDto>.Create(tagDtos, totalTags, request.Page, request.PageSize);
 
             return ResultModel<ListResultModel<TagDto>>.Create(resultModel);
         }

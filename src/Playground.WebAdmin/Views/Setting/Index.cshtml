@@ -1,0 +1,97 @@
+﻿@using Playground.WebAdmin.Models.Setting
+@model SettingViewModel
+@{
+    ViewData["Title"] = "Setting Management";
+    Layout = "CoreUI/_LayoutCoreUI";
+}
+
+<div class="container-lg">
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4 class="card-title mb-0">Tag Management</h4>
+                </div>
+                <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
+                    <a class="btn btn-primary" href="@Url.ActionLink("ModifyTag","Setting")" role="button">
+                        <i class="fa-solid fa-plus icon me-2"></i>Add Tag
+                    </a>
+                </div>
+            </div>
+            <br />
+            <div>
+                <table id="tags-table" class="stripe" data-tag-modify-url="@Url.ActionLink("ModifyTag","Setting")">
+                    <thead>
+                        <tr>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Id</th>
+                            <th class="sorting sorting_asc" tabindex="0" rowspan="1" colspan="1"
+                                aria-sort="ascending">Name</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Bg Color</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Text Color</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Border Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <tr class="odd">
+                                <td>@tag.Id</td>
+                                <td class="sorting_1">@tag.Name</td>
+                                <td>@tag.TagBgColor</td>
+                                <td>@tag.TagTextColor</td>
+                                <td>@tag.TagBorderColor</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+
+<style>
+</style>
+}
+
+@section Scripts{
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/b-2.2.3/cr-1.5.6/date-1.1.2/r-2.3.0/sb-1.3.4/sp-2.0.2/datatables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const baseModifyUrl = $('#tags-table').data('tag-modify-url');
+
+        $('#tags-table').DataTable({
+            scrollY: '50vh',
+            scrollCollapse: true,
+            paging: false,
+            autoWidth: false,
+            columnDefs: [
+                {
+                    target: [0, 2, 3, 4],
+                    visible: false,
+                    searchable: false,
+                },
+                {
+                    target: 1,
+                    render: function (data, type, row) {
+                        console.log(row);
+                        let bgColor= row[2], color = row[3], borderColor=row[4];
+                        return `<a href="${baseModifyUrl}/${row[0]}" class="btn" role="button"
+                        style="bordder: 1px solid ${borderColor}; color=${color}; background: ${bgColor}">${data}</a>`
+                        // <a class="btn btn-primary" href="#" role="button">Link</a>
+                    },
+                }
+            ],
+        });
+    });
+</script>
+}
