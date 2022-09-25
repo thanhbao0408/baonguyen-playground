@@ -1,0 +1,179 @@
+﻿@using Playground.WebAdmin.Models.Setting
+@model SettingViewModel
+@{
+    ViewData["Title"] = "Setting Management";
+    Layout = "CoreUI/_LayoutCoreUI";
+}
+
+<div class="container-lg">
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4 class="card-title mb-0">Tag Management</h4>
+                </div>
+                <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
+                    <form asp-controller="Setting" asp-action="CreateTag" method="post">
+                        <div class="row">
+                            <div class="col">
+                                <text id="tag-show" class="btn"
+                                      style="background-color: rgb(211, 229, 239); color: rgb(24, 51, 71); border: 1px solid rgb(24, 51, 71);">Tag Name</text>
+                            </div>
+                            <div class="col">
+                                <input name="Name" id="tag-create-name" type="text" class="form-control" placeholder="Tag name" aria-label="Tag name">
+                            </div>
+                            <div class="col">
+                                <select name="ColorId" class="form-select" id="tag-colors">
+                                    @foreach (var color in Model.Colors)
+                                    {
+                                        <option value="@color.Id"
+                                            data-bg-color="@color.BgColor"
+                                            data-text-color="@color.TextColor"
+                                            data-border-color="@color.BorderColor">
+                                            @color.Name
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary" style="width:100%">
+                                    <i class="fa-solid fa-plus icon me-2"></i>Add Tag
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <br />
+            <div>
+                <table id="tags-table" class="stripe">
+                    <thead>
+                        <tr>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Id</th>
+                            <th class="sorting sorting_asc" tabindex="0" rowspan="1" colspan="1"
+                                aria-sort="ascending">Name</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Bg Color</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Text Color</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Border Color</th>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Color Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <tr class="odd">
+                                <td>@tag.Id</td>
+                                <td class="sorting_1">@tag.Name</td>
+                                <td>@tag.TagBgColor</td>
+                                <td>@tag.TagTextColor</td>
+                                <td>@tag.TagBorderColor</td>
+                                <td>@tag.ColorId</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+
+    <style>
+    </style>
+}
+
+    @section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/b-2.2.3/cr-1.5.6/date-1.1.2/r-2.3.0/sb-1.3.4/sp-2.0.2/datatables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const updateTagLink = "@Url.ActionLink("UpdateTag", "Setting")";
+
+            const colorOptions = `@foreach (var color in Model.Colors)
+                                    {
+                                        <option value="@color.Id"
+                                            data-bg-color="@color.BgColor"
+                                            data-text-color="@color.TextColor"
+                                            data-border-color="@color.BorderColor">
+                                                @color.Name
+                                        </option>
+                                    }`;
+
+            $('#tags-table').DataTable({
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+                autoWidth: false,
+                columnDefs: [
+                    {
+                        target: [0, 2, 3, 4, 5],
+                        visible: false,
+                        searchable: false,
+                    },
+                    {
+                        target: 1,
+                        render: function (data, type, row) {
+                            let id = row[0], bgColor = row[2], color = row[3], borderColor = row[4];
+                            const rowHtml = `
+                            <form method="post" action="${updateTagLink}">
+                                <input type="hidden" value="${id}" name="Id"/>
+                                <div class="row" style="width: 100%">
+                                    <div class="col">
+                                        <text class="btn"
+                                            style="border: 1px solid ${borderColor}; color:${color}; background: ${bgColor}">${data}</a>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text"
+                                            class="form-control tag-update-name" placeholder="Tag name" aria-label="Tag name" name="Name" value="${row[1]}">
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select tag-colors-selector"
+                                            name="ColorId"
+                                            data-color-id="${row[5]}">
+                                                ${colorOptions}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary" style="width:100%">Update Tag</button>
+                                    </div>
+                                </div>
+                            </form>
+                            `;
+                            return rowHtml;
+                        },
+                    }
+                ],
+            });
+
+            // Select 2
+            $('#tag-colors').on('select2:select', (e) => {
+                const colorOptionEl = e.params.data.element;
+                $('#tag-show')
+                    .css("background-color", `${colorOptionEl.dataset['bgColor']}`)
+                    .css("color", `${colorOptionEl.dataset['textColor']}`)
+                    .css("border", `1px solid ${colorOptionEl.dataset['borderColor']}`)
+            });
+
+            $('#tag-colors, .tag-colors-selector').select2({
+                templateResult: (state) => {
+                    return state.text;
+                }
+            });
+
+                $('.tag-colors-selector').toArray().forEach(p => $(p).val(p.dataset.colorId).trigger('change'));
+
+            $('#tag-create-name').on('keyup', (e) => {
+                $('#tag-show').text(e.currentTarget.value);
+            });
+        });
+    </script>
+}

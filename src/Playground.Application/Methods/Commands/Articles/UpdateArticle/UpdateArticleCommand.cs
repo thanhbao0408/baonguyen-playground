@@ -3,6 +3,8 @@ using BN.CleanArchitecture.Core.Repository;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Playground.Application.Contracts.Dtos.Blog.Articles;
+using Playground.Application.Methods.Queries;
+using Playground.Application.Specs.Articles;
 using Playground.Core.Entities.Blog.Articles;
 using System.Text.RegularExpressions;
 
@@ -26,9 +28,17 @@ namespace Playground.Application.Methods.Commands.Articles.CreateArticle
                     {
                         return Regex.IsMatch(slug, @"^[a-zA-Z0-9-]+$");
                     })
-                    .MustAsync(async (slug, cancellation) =>
+                    .MustAsync(async (command, slug, cancellation) =>
                     {
                         var isDuplicated = await _articleRepo.AnyAsync(article => EF.Functions.Like(article.Slug, slug));
+                        if (isDuplicated)
+                        {
+                            var article = await _articleRepo.FindByIdAsync(command.Model.Id);
+                            if(slug.Equals(article.Slug, StringComparison.OrdinalIgnoreCase))
+                            {
+                                isDuplicated = false;
+                            }
+                        }
                         return !isDuplicated;
                     }).WithMessage("Slug must be unique");
 

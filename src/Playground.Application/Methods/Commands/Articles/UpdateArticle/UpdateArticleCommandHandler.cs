@@ -28,7 +28,7 @@ namespace Playground.Application.Methods.Commands.Articles.CreateArticle
         
         public async Task<ResultModel<ArticleDetailDto>> Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
         {
-            var article = _articleRepository.FindById(request.Model.Id);
+            var article = await _articleRepository.FindByIdAsync(request.Model.Id);
 
             article.Title = request.Model.Title;
             article.Slug = request.Model.Slug;

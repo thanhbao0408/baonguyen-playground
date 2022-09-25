@@ -12,6 +12,8 @@ namespace Playground.Core.Entities.Taggings
         [MaxLength(200)]
         public string Name { get; set; }
 
+        [Required]
+        public Guid ColorId { get; set; }
         public TagColor Color { get; set; }
     }
 }

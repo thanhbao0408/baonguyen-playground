@@ -18,9 +18,9 @@ public class RepositoryBase<TDbContext, TEntity, TKey> : IRepository<TEntity, TK
         _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public TEntity FindById(TKey id)
+    public async Task<TEntity> FindByIdAsync(TKey id)
     {
-        return _dbContext.Set<TEntity>().SingleOrDefault(e => e.Id.Equals(id));
+        return await _dbContext.Set<TEntity>().SingleOrDefaultAsync(e => e.Id.Equals(id));
     }
 
     public async Task<TEntity> FindOneAsync(ISpecification<TEntity> spec)

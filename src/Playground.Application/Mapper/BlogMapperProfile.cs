@@ -18,7 +18,14 @@ namespace Blog.Contracts.Mapper
                 .ForMember(des => des.ArticleTags, opt => opt.MapFrom(src => src.ArticleTags.Select(p => p.Tag)))
                 .ReverseMap();
 
-            CreateMap<Tag, TagDto>().ReverseMap();
+            CreateMap<Tag, TagDto>()
+                .ForMember(des => des.TagTextColor, opt => opt.MapFrom(src => src.Color.TextColor))
+                .ForMember(des => des.TagBgColor, opt => opt.MapFrom(src => src.Color.BgColor))
+                .ForMember(des => des.TagBorderColor, opt => opt.MapFrom(src => src.Color.BorderColor))
+                .ReverseMap()
+                .ForMember(des => des.Color, opt => opt.Ignore());
+
+            CreateMap<TagColor, TagColorDto>().ReverseMap();
 
         }
     }

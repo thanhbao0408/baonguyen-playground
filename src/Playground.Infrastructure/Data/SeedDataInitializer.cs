@@ -89,14 +89,14 @@ public static class SeedDataInitializer
         {
             new TagColor(Guid.NewGuid())
             {
-                Name = "green",
+                Name = "yellow",
                 TextColor = "#402c1b",
                 BgColor = "#fdecc8",
                 BorderColor = "#402c1b",
             },
             new TagColor(Guid.NewGuid())
             {
-                Name = "yellow",
+                Name = "green",
                 TextColor = "#1c3829",
                 BgColor = "#dbeddb",
                 BorderColor = "#1c3829",
